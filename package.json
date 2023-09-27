@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "backend": "node ./server/app.js",
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -13,6 +14,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.5.3",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
