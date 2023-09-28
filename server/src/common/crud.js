@@ -1,25 +1,32 @@
 /* eslint-disable no-undef */
-const { errData, errorRes } = require('./response')
+const { errData, errorRes, successRes } = require('./response')
 const mongoose = require('mongoose')
 
 function create(model, populate = []) {
-    return (
-        req,
-        (res) => {
+    return async (req, res) => {
+        try {
             const newData = new model({
                 _id: new mongoose.Types.ObjectId(),
                 ...req.body
             })
-            return newData
-                .save()
-                .then((t) => t.populate(...populate, errData(res)))
-                .catch((err) => errorRes(res, err))
+            const createdData = await newData.save()
+            const populatedData = await createdData.populate(...populate).execPopulate()
+            successRes(res, populatedData)
+        } catch (err) {
+            errorRes(res, err)
         }
-    )
+    }
 }
 
 function read(model, populate = []) {
-    return (req, res) => model.find(...req.body, errData(res)).populate(...populate)
+    return async (req, res) => {
+        try {
+            const readedData = await model.find(...req.body, errData(res)).populate(...populate)
+            successRes(res, readedData)
+        } catch (err) {
+            errorRes(res, err)
+        }
+    }
 }
 
 function update(model, populate = []) {

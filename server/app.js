@@ -1,21 +1,27 @@
 /* eslint-disable no-undef */
 const express = require('express');
-
-
+const logger = require('morgan');
+const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
 
-app.listen(port, () => {
-  console.log(`Servidor está ouvindo na porta ${port}`);
+app
+.use(cors())
+.use(logger('dev'))
+.use(express.json())
+
+// Configure a conexão com o MongoDB
+const mongoDBUri = `mongodb+srv://${process.env.DB_MONGO_USER}:${process.env.DB_MONGO_PASSWORD}@tranquill-finance.o3jcxng.mongodb.net/`;
+mongoose.connect(mongoDBUri, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'Erro na conexão com o MongoDB:'));
+db.once('open', () => {
+    console.log(`\n\n###############################################\nConexão com o MongoDB estabelecida com sucesso!\n###############################################\n\n`);
 });
 
-// Configuração do servidor Express aqui
-app.get('/', async (req, res) => {
-    try {
-        console.log('CONECTADO!');        
-        res.status(200).json({ message: 'Servidor está funcionando!' });
-    } catch (e) {
-        res.status(500).json({ error: `Ocorreu um erro ao se conectar: ${e}` });
-        console.error('Erro ao tentar se conectar:', e);
-    }
-});
+const accountRouters = require('./src/routes/accountsRouter');
+app.use('/', accountRouters);
+
+
+module.exports = app;
