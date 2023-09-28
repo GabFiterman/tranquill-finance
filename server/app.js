@@ -4,6 +4,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 app
 .use(cors())

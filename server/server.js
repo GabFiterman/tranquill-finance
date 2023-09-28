@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 var app = require ('./app');
 var http = require('http');
+require('dotenv').config();
 
 var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
