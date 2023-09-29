@@ -1,10 +1,8 @@
 /* eslint-disable no-undef */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const ObjectId = Schema.Types.ObjectId
 
-const personSchema = new Schema({
-    _id: ObjectId,
+const userSchema = new Schema({
     complete_name: { type: String, required: true },
     user_name: { type: String, required: true },
     gender: { type: String, required: true },
@@ -18,4 +16,4 @@ const personSchema = new Schema({
     updated_date: { type: Date }
 })
 
-module.exports = mongoose.model('Person', personSchema, 'person')
+module.exports = mongoose.model('User', userSchema)
