@@ -12,7 +12,7 @@ app
 .use(express.json())
 
 // Configure a conexão com o MongoDB
-const mongoDBUri = `mongodb+srv://${process.env.DB_MONGO_USER}:${process.env.DB_MONGO_PASSWORD}@tranquill-finance.o3jcxng.mongodb.net/`;
+const mongoDBUri = `mongodb+srv://${process.env.DB_MONGO_USER}:${process.env.DB_MONGO_PASSWORD}@tranquill-finance.o3jcxng.mongodb.net/${process.env.DB_MONGO_DATABASE}`;
 mongoose.connect(mongoDBUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
