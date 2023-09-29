@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const express = require('express');
 const router = express.Router();
-const accountController = require('../controllers/accountController');
+const { accountController } = require('../controllers');
 
 // Cria uma nova conta
 router.post('/create', accountController.createAccount);
