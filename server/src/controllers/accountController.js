@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const AccountSchema = require('../models/accountModel');
+const AccountSchema = require('../models/accountModel')
 
 exports.createAccount = async (req, res) => {
     try {
@@ -13,7 +13,7 @@ exports.createAccount = async (req, res) => {
             })
         }
 
-        const accounts = await AccountSchema.create({
+        const account = await AccountSchema.create({
             alias,
             bank,
             account_type,
@@ -25,11 +25,10 @@ exports.createAccount = async (req, res) => {
 
         res.status(201).json({
             message: `Success! Your account ${alias} has been created`,
-            accounts
+            account
         })
     } catch (error) {
         res.status(500).json({ error: error.message })
-        throw new Error(error)
     }
 }
 
@@ -44,8 +43,12 @@ exports.getAllAccounts = async (req, res) => {
 
 exports.getSpecificAccount = async (req, res) => {
     try {
-        const { alias, bank, account_type } = req.body
+        const { _id, alias, bank, account_type } = req.body
         const query = {}
+
+        if (_id) {
+            query._id = _id
+        }
 
         if (alias) {
             query.alias = alias
@@ -108,10 +111,10 @@ exports.updateAccount = async (req, res) => {
 
 exports.deleteAccount = async (req, res) => {
     try {
-        const { _id } = req.body;
-        const deleteRes = await AccountSchema.deleteOne({ _id }).lean();
+        const { _id } = req.body
+        const deleteRes = await AccountSchema.deleteOne({ _id }).lean()
 
-        if(!deleteRes) {
+        if (!deleteRes) {
             return res.status(404).json({ error: 'Document not found' })
         }
         res.status(200).json({ message: 'Delete With Success', deleteRes })
