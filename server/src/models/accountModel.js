@@ -1,10 +1,8 @@
 /* eslint-disable no-undef */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const ObjectId = Schema.Types.ObjectId
 
-const accountsSchema = new Schema({
-    _id: ObjectId,
+const accountSchema = new Schema({
     alias: { type: String, required: true },
     bank: { type: String, required: true },
     account_type: { type: String, required: true },
@@ -15,4 +13,4 @@ const accountsSchema = new Schema({
     updated_date: { type: Date }
 })
 
-module.exports = mongoose.model('Accounts', accountsSchema, 'accounts')
+module.exports = mongoose.model('Account', accountSchema)

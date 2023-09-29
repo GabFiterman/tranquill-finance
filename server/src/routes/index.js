@@ -1,4 +1,5 @@
-const accountsRoutes = require('./accountRoutes');
-const usersRoutes = require('./userRoutes');
+/* eslint-disable no-undef */
+const accountRoutes = require('./accountRoutes');
+const userRoutes = require('./userRoutes');
 
-module.exports = { accountsRoutes, usersRoutes };
+module.exports = { accountRoutes, userRoutes };

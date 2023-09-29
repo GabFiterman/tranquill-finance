@@ -1,14 +1,19 @@
 /* eslint-disable no-undef */
-const Accounts = require('../models/accountModel')
-const KakauSchema = require('../models/KakauModel')
-const { create, read } = require('../common/crud')
+const AccountSchema = require('../models/accountModel');
 
 exports.createAccount = async (req, res) => {
     try {
         const { alias, bank, account_type, balance, has_credit_card, total_credit, credit_used } =
             req.body
 
-        await create(Accounts, {
+        // Retorna erro se não preeencher os campos obrigatórios
+        if (!alias || !bank || !account_type) {
+            return res.status(400).json({
+                error: "'alias', 'bank' and 'account_type' are required"
+            })
+        }
+
+        const accounts = await AccountSchema.create({
             alias,
             bank,
             account_type,
@@ -17,75 +22,96 @@ exports.createAccount = async (req, res) => {
             total_credit,
             credit_used
         })
-    } catch (err) {
+
+        res.status(201).json({
+            message: `Success! Your account ${alias} has been created`,
+            accounts
+        })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
         throw new Error(error)
     }
 }
 
 exports.getAllAccounts = async (req, res) => {
     try {
-        await read(Accounts)
-    } catch (err) {
+        const accounts = await AccountSchema.find().lean()
+        res.status(200).json({ accounts })
+    } catch (error) {
         res.status(500).json({ error: err.message })
     }
 }
 
-exports.getDefault = (req, res) => {
+exports.getSpecificAccount = async (req, res) => {
     try {
-        res.status(200).json({ message: 'OK! Works!' })
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-}
+        const { alias, bank, account_type } = req.body
+        const query = {}
 
-exports.getAllKakaus = async (req, res) => {
-    try {
-        const mongoRes = await KakauSchema.find().lean()
-        res.status(200).json({ message: 'Works okay!', mongoRes })
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-}
-
-exports.createKakau = async (req, res) => {
-    try {
-        const { type, name } = req.body
-        const mongoRes = await KakauSchema.create({ type, name })
-        res.status(200).json({ message: 'Create test OKAY!!', mongoRes })
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-}
-
-exports.updateKakauName = async (req, res) => {
-    try {
-        const { name, new_name } = req.body
-
-        if (!name || !new_name) {
-            return res.status(400).json({ error: "'name' and 'new_name' are required." })
+        if (alias) {
+            query.alias = alias
         }
 
-        const updateDoc = await KakauSchema.findOneAndUpdate(
-            { name: query },
-            { name: new_name },
+        if (bank) {
+            query.bank = bank
+        }
+
+        if (account_type) {
+            query.account_type = account_type
+        }
+
+        const account = await AccountSchema.find(query).lean()
+        res.status(200).json({ account })
+    } catch (error) {
+        res.status(500).json({ error: err.message })
+    }
+}
+
+exports.updateAccount = async (req, res) => {
+    try {
+        const {
+            _id,
+            alias,
+            bank,
+            account_type,
+            balance,
+            has_credit_card,
+            total_credit,
+            credit_used
+        } = req.body
+
+        if (!_id) {
+            return res.status(400).json({ error: "'_id' are required." })
+        }
+
+        const updateDoc = await AccountSchema.findOneAndUpdate(
+            { _id },
+            {
+                alias,
+                bank,
+                account_type,
+                balance,
+                has_credit_card,
+                total_credit,
+                credit_used
+            },
             { new: true }
-        ).lean()
+        )
 
         if (!updateDoc) {
             return res.status(404).json({ error: 'Document not found' })
         }
-
         res.status(200).json({ message: 'Update With Success', updateDoc })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
 
-exports.deleteKakau = async (req, res) => {
+exports.deleteAccount = async (req, res) => {
     try {
-        const { name } = req.body
-        const deleteRes = await KakauSchema.deleteOne({ name }).lean()
-        if (!deleteRes) {
+        const { _id } = req.body;
+        const deleteRes = await AccountSchema.deleteOne({ _id }).lean();
+
+        if(!deleteRes) {
             return res.status(404).json({ error: 'Document not found' })
         }
         res.status(200).json({ message: 'Delete With Success', deleteRes })
@@ -93,4 +119,3 @@ exports.deleteKakau = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
-// Outras funções para listar, atualizar, excluir contas, etc.
