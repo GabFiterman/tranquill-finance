@@ -21,10 +21,11 @@ db.once('open', () => {
     console.log(`\n\n###############################################\nConexão com o MongoDB estabelecida com sucesso!\n###############################################\n\n`);
 });
 
-const { accountRoutes, userRoutes } = require('./src/routes');
+const { accountRoutes, userRoutes, categoryRoutes } = require('./src/routes');
 
 app.use('/account', accountRoutes);
 app.use('/user', userRoutes);
+app.use('/category', categoryRoutes);
 
 
 
