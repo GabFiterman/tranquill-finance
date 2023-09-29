@@ -1,45 +1,94 @@
 /* eslint-disable no-undef */
-const { errData, errorRes, successRes } = require('./response')
-const mongoose = require('mongoose')
+const { errorRes, notFoundRes, successRes, createdRes } = require('./response')
 
-function create(model, populate = []) {
+const createDocument = (model) => {
     return async (req, res) => {
         try {
-            const newData = new model({
-                _id: new mongoose.Types.ObjectId(),
-                ...req.body
-            })
+            const newData = new model(req.body)
             const createdData = await newData.save()
-            const populatedData = await createdData.populate(...populate).execPopulate()
-            successRes(res, populatedData)
+            if (!createdData) {
+                notFoundRes(res)
+            }
+            createdRes(res, createdData)
         } catch (err) {
             errorRes(res, err)
         }
     }
 }
 
-function read(model, populate = []) {
+const readAllDocuments = (model) => {
     return async (req, res) => {
         try {
-            const readedData = await model.find(...req.body, errData(res)).populate(...populate)
-            successRes(res, readedData)
+            const data = await model.find().lean()
+
+            if (!data || data == []) {
+                notFoundRes(res)
+            }
+
+            successRes(res, data)
         } catch (err) {
             errorRes(res, err)
         }
     }
 }
 
-function update(model, populate = []) {
-    return (req, res) => {
-        req.body.update_at = new Date()
-        return model
-            .findByIdAndUpdate(req.params._id, req.body, { new: true }, errData(res))
-            .populate(...populate)
+const readOneDocument = (model) => {
+    return async (req, res) => {
+        try {
+            const query = {}
+            query._id = req.params.id
+
+            const data = await model.find(query).lean()
+
+            if (!data || data == []) {
+                notFoundRes(res)
+            }
+            successRes(res, data)
+        } catch (err) {
+            errorRes(res, err)
+        }
     }
 }
 
-function remove(model) {
-    return (req, res) => model.deleteOne({ _id: req.params._id }, errData(res))
+const updateDocument = (model) => {
+    return async (req, res) => {
+        try {
+            const { _id } = req.body
+
+            const updatedData = await model.findByIdAndUpdate(_id, req.body, { new: true })
+
+            if (!updatedData) {
+                res.status(404).json({ error: 'Document not found' })
+            }
+
+            successRes(res, updatedData)
+        } catch (err) {
+            errorRes(res, err)
+        }
+    }
 }
 
-module.exports = { read, create, update, remove }
+const deleteDocument = (model) => {
+    return async (req, res) => {
+        try {
+            const { _id } = req.body
+            const deletedData = await model.deleteOne({ _id }).lean()
+
+            if (!deletedData) {
+                notFoundRes(res)
+            }
+
+            successRes(res, deletedData)
+        } catch (err) {
+            errorRes(res, err)
+        }
+    }
+}
+
+module.exports = {
+    createDocument,
+    readAllDocuments,
+    readOneDocument,
+    updateDocument,
+    deleteDocument
+}

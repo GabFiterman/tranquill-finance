@@ -1,18 +1,21 @@
 /* eslint-disable no-undef */
-function errorRes(res, err, errMsg = 'failed operation', statusCode = 500) {
-    console.error('ERROR:', err)
+
+const errorRes = (res, err, errMsg = 'Failed operation', statusCode = 500) => {
+    console.error('ERROR - ErrorRes:', err)
     return res.status(statusCode).json({ success: false, error: errMsg })
 }
 
-function successRes(res, data = {}, statusCode = 200) {
+const notFoundRes = (res, err, errMsg = 'Not Found Document', statusCode = 404) => {
+    console.error('ERROR - NotFoundRes:', err)
+    return res.status(statusCode).json({ success: false, error: errMsg })
+}
+
+const successRes = (res, data = {}, statusCode = 200) => {
     return res.status(statusCode).json({ success: true, data })
 }
 
-function errData(res, errMsg = 'failed operation') {
-    return (err, data) => {
-        if (err) return errorRes(res, err, errMsg)
-        return successRes(res, data)
-    }
+const createdRes = (res, data = {}, statusCode = 201) => {
+    return res.status(statusCode).json({ success: true, data })
 }
 
-module.exports = { errorRes, successRes, errData }
+module.exports = { errorRes, notFoundRes, successRes, createdRes }
