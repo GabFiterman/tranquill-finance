@@ -6,6 +6,7 @@
         "activityBar.inactiveForeground": "#343a42",
         "activityBar.foreground": "#343a42",
         "titleBar.activeBackground": "#c2c8c9",
-        "titleBar.activeForeground": "#343a42"
-    }
+        "titleBar.activeForeground": "#343a42",
+    },
+    "window.zoomLevel": 1.15,
 }
