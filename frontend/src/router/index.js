@@ -6,7 +6,6 @@ import {
     createWebHashHistory,
 } from 'vue-router';
 import routes from './routes';
-// import useAuthUser from '../composables/UseAuthUser'
 import useAuthUser from 'src/composables/UseAuthUser';
 
 /*
