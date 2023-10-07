@@ -1,5 +1,5 @@
 <template>
-    <q-page padding>
+    <q-page class="flex flex-center">
         <div v-if="user">
             <div>Hello {{ user.user_metadata.name }}</div>
         </div>
@@ -14,8 +14,6 @@ export default defineComponent({
     name: 'PageMe',
     setup() {
         const { user } = useAuthUser();
-
-        console.log(user.user_metadata.name);
 
         return {
             user,

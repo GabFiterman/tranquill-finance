@@ -13,7 +13,6 @@
 
                 <q-input
                     label="Password"
-                    type="password"
                     v-model="form.password"
                     lazy-rules
                     :rules="[(val) => (val && val.length > 0) || 'Password is required']"
@@ -53,30 +52,24 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref } from 'vue';
 import useAuthUser from 'src/composables/UseAuthUser';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-    name: 'LoginUser',
+    name: 'PageLogin',
 
     setup() {
         const router = useRouter();
 
-        const { login, isLoggedIn } = useAuthUser();
+        const { login } = useAuthUser();
 
         const { notifyError, notifySuccess } = useNotify();
 
         const form = ref({
             email: '',
             password: '',
-        });
-
-        onMounted(() => {
-            if (isLoggedIn) {
-                router.push({ name: 'me' });
-            }
         });
 
         const handleLogin = async () => {
