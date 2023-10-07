@@ -30,10 +30,10 @@ import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
     {
-        title: 'Docs',
-        caption: 'quasar.dev',
-        icon: 'school',
-        link: 'https://quasar.dev',
+        title: 'Home',
+        caption: '',
+        icon: 'mdi-home',
+        routeName: 'me',
     },
     {
         title: 'Github',

@@ -45,6 +45,7 @@ module.exports = configure(function (/* ctx */) {
 
             'roboto-font', // optional, you are not bound to it
             'material-icons', // optional, you are not bound to it
+            'mdi-v5',
         ],
 
         // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -145,7 +146,7 @@ module.exports = configure(function (/* ctx */) {
             // manualPostHydrationTrigger: true,
 
             prodPort: 3000, // The default port that the production server should use
-            // (gets superseded if import.meta.env.PORT is specified at runtime)
+            // (gets superseded if process.env.PORT is specified at runtime)
 
             middlewares: [
                 'render', // keep this as last one
