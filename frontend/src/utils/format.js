@@ -1,12 +1,10 @@
 const formatCurrency = (currency) => {
-  const formatted = currency.toLocaleString('pt-br', {
-    style: 'currency',
-    currency: 'BRL'
-  })
+    const formatted = currency.toLocaleString('pt-br', {
+        style: 'currency',
+        currency: 'BRL',
+    });
 
-  return formatted
-}
+    return formatted;
+};
 
-export {
-  formatCurrency
-}
+export { formatCurrency };
