@@ -71,7 +71,7 @@ export default defineComponent({
             formatCurrency,
             handleClose,
             handleSendWpp,
-            brand
+            brand,
         };
     },
 });
