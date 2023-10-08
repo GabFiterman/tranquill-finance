@@ -22,6 +22,7 @@
             <q-card-actions align="right">
                 <q-btn label="Cancel" color="primary" outline v-close-popup />
                 <q-btn
+                    v-if="brand.phone"
                     label="Buy on whatsapp"
                     icon="mdi-whatsapp"
                     color="green-7"
@@ -36,6 +37,7 @@
 import { defineComponent } from 'vue';
 import { formatCurrency } from 'src/utils/format';
 import { openURL } from 'quasar';
+import UseApi from 'src/composables/UseApi';
 
 export default defineComponent({
     name: 'DialogProductDetails',
@@ -49,7 +51,7 @@ export default defineComponent({
         },
     },
     setup(props, { emit }) {
-        const phone = '62984602348';
+        const { brand } = UseApi();
         const msg = 'Olá, fiquei interressado no produto: ';
 
         const handleClose = () => {
@@ -58,7 +60,7 @@ export default defineComponent({
 
         const handleSendWpp = () => {
             const link = encodeURI(
-                `https://api.whatsapp.com/send?phone=55${phone}&text=${msg} - ${
+                `https://api.whatsapp.com/send?phone=55${brand.value.phone}&text=${msg} - ${
                     props.product.name
                 } - ${formatCurrency(props.product.price)}`,
             );
@@ -69,6 +71,7 @@ export default defineComponent({
             formatCurrency,
             handleClose,
             handleSendWpp,
+            brand
         };
     },
 });
