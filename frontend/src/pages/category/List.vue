@@ -60,7 +60,7 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import useApi from 'src/composables/UseApi';
 import useNotify from 'src/composables/UseNotify';
-import useAuthUser from 'src/composables/UseAuthUser'
+import useAuthUser from 'src/composables/UseAuthUser';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { columnsCategory } from './table';
@@ -72,9 +72,9 @@ export default defineComponent({
         const loading = ref(true);
         const router = useRouter();
         const table = 'category';
-        const $q = useQuasar()
-        const { user } = useAuthUser()
-        const { listPublic, remove } = useApi()
+        const $q = useQuasar();
+        const { user } = useAuthUser();
+        const { listPublic, remove } = useApi();
         const { notifyError, notifySuccess } = useNotify();
 
         const handleListCategories = async () => {
