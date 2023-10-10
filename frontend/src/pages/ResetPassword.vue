@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import useAuthUser from 'src/composables/UseAuthUser';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router';
@@ -37,8 +37,11 @@ export default defineComponent({
         const { resetPassword } = useAuthUser();
         const { notifyError, notifySuccess } = useNotify();
         const router = useRouter();
-
         const password = ref('');
+
+        onMounted(() => {
+            console.log('§ § § § § § Mounted Reset Password.');
+        });
 
         const handlePasswordReset = async () => {
             try {
@@ -47,6 +50,7 @@ export default defineComponent({
                 router.push({ name: 'login' });
             } catch (error) {
                 notifyError(error.message);
+                throw new Error(error);
             }
         };
 

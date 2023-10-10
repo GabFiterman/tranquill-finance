@@ -50,7 +50,7 @@ export default defineComponent({
         const email = ref('');
 
         const handleForgotPassowrd = async () => {
-          console.log('handleForgotPassowrd, email: ', email.value);
+            console.log('handleForgotPassowrd, email: ', email.value);
 
             try {
                 await sendPasswordRestEmail(email.value);
