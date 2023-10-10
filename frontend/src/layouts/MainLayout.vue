@@ -83,11 +83,6 @@ export default defineComponent({
         const router = useRouter();
 
         const { logout } = useAuthUser();
-        const { getBrand } = useApi();
-
-        onMounted(() => {
-            getBrand();
-        });
 
         const handleLogout = async () => {
             $q.dialog({

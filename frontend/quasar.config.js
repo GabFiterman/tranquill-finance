@@ -10,6 +10,20 @@
 
 const { configure } = require('quasar/wrappers');
 const path = require('path');
+const VITE_AMBIENT = process.env.VITE_AMBIENT;
+const VITE_APP_PORT = process.env.VITE_APP_PORT;
+let portNumber;
+switch (VITE_AMBIENT) {
+    case 'local':
+        portNumber = VITE_APP_PORT;
+        break;
+    case 'dev':
+        portNumber = '';
+        break;
+    case 'prod':
+        portNumber = '';
+        break;
+}
 
 module.exports = configure(function (/* ctx */) {
     return {
@@ -64,7 +78,10 @@ module.exports = configure(function (/* ctx */) {
 
             // publicPath: '/',
             // analyze: true,
-            // env: {},
+            env: {
+                // TODO: add PROD and DEV env variables
+                APP_BASE_URL: portNumber,
+            },
             // rawDefine: {}
             // ignorePublicFolder: true,
             // minify: false,

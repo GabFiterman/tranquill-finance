@@ -14,7 +14,7 @@ const useAuthUser = () => {
             throw new Error('Missing email or password');
         }
 
-        const { user, error } = await supabase.auth.signIn({ email, password });
+        const { user, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         return user;
     };
@@ -86,22 +86,24 @@ const useAuthUser = () => {
     const sendPasswordRestEmail = async (email) => {
         if (!email) throw new Error('Missing email');
 
-        const { user, error } = await supabase.auth.api.resetPasswordForEmail(email);
-        if (error) throw error;
-        return user;
+        try {
+            await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `http://localhost:9000/#/reset-password`,
+            });
+        } catch (error) {
+            throw new error(error.message);
+        }
     };
 
     /**
      * Reset a user's password with a token received in email
      */
-    const resetPassword = async (accessToken, newPassword) => {
-        if (!accessToken || !newPassword) throw new Error('Missing access token or new password');
-
-        const { user, error } = await supabase.auth.api.updateUser(accessToken, {
-            password: newPassword,
-        });
-        if (error) throw error;
-        return user;
+    const resetPassword = async (newPassword) => {
+        try {
+            await supabase.auth.api.updateUser({ password: newPassword });
+        } catch (error) {
+            throw new error(error.message);
+        }
     };
 
     return {
