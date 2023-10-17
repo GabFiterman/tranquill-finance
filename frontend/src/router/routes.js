@@ -33,6 +33,11 @@ const routes = [
                 name: 'category',
                 component: () => import('pages/category/List.vue'),
             },
+            {
+              path: 'accounts',
+              name: 'accounts',
+              component: () => import('pages/accounts/index.vue')
+            }
             // { path: '', component: () => import('pages/Index.vue') }
         ],
         meta: {
