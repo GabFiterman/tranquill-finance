@@ -57,6 +57,15 @@
               </q-form>
           </div>
       </div>
+
+      <div class="row q-pl-lg-xl" v-if="allAccounts.length > 0">
+          <h4>Contas cadastradas</h4>
+          <ul>
+              <li v-for="account in allAccounts" :key="account.id">
+                  {{ account.alias }} | {{ account.bank }} | {{ account.account_type }}
+              </li>
+          </ul>
+      </div>
   </q-page>
 </template>
 
@@ -79,6 +88,11 @@ export default defineComponent({
           credit_used: 0,
       });
       const { notifyError, notifySuccess } = useNotify();
+      const allAccounts = ref([]);
+
+      onMounted(() => {
+          getAllAccounts();
+      });
 
       const handleOnSubmit = async () => {
           console.log('Will Submit: ', form.value);
@@ -110,9 +124,27 @@ export default defineComponent({
           console.log('Form was reset');
       };
 
+      const getAllAccounts = async () => {
+          await api
+              .get(`/account/get-all`)
+              .then((res) => {
+                  allAccounts.value = res.data.data;
+                  console.log(res);
+              })
+              .catch((err) => {
+                  notifyError(`Erro ao buscar contas: ${err}`);
+                  throw new Error(err);
+              })
+              .finally(() => {
+                  console.log('Request finished');
+              });
+      };
+
       return {
           form,
           account_types_options,
+          allAccounts,
+
           handleOnSubmit,
           handleOnReset,
       };
