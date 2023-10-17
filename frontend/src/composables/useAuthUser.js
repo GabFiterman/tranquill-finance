@@ -82,6 +82,7 @@ const useAuthUser = () => {
         }
     };
 
+    // NOTE: É duvidoso se realmente isso funciona, pois vezes sim vezes não. Acho que vou para o Firebase, fazer a API no futuro ... Algo assim.
     const resetPassword = async (new_Password) => {
         try {
             await supabase.auth.updateUser({ password: new_Password });
