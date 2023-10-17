@@ -36,7 +36,7 @@ const routes = [
             {
               path: 'accounts',
               name: 'accounts',
-              component: () => import('pages/accounts/index.vue')
+              component: () => import('pages/accounts/AccountsPage.vue')
             }
             // { path: '', component: () => import('pages/Index.vue') }
         ],
