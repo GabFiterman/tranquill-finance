@@ -75,16 +75,16 @@ const useAuthUser = () => {
     const sendPasswordRestEmail = async (email) => {
         try {
             await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: 'http://localhost:9000/#/reset-password',
+                redirectTo: 'http://localhost:9000/#/reset-password/',
             });
         } catch (error) {
             throw new Error(error);
         }
     };
 
-    const resetPassword = async (newPassword) => {
+    const resetPassword = async (new_Password) => {
         try {
-            await supabase.auth.updateUser({ password: newPassword });
+            await supabase.auth.updateUser({ password: new_Password });
         } catch (error) {
             throw new Error(error);
         }
@@ -102,6 +102,6 @@ const useAuthUser = () => {
         resetPassword,
         // maybeHandleEmailConfirmation,
     };
-}
+};
 
 export default useAuthUser;
