@@ -43,18 +43,18 @@ const useAuthUser = () => {
      * Register
      */
     const register = async ({ email, password, ...meta }) => {
-      const { user, error } = await supabase.auth.signUp(
-          { email, password },
-          {
-            data: meta,
-            // TODO: Vou precisar refatorar o código e remover o SupabaseAuthClient.
-            // por nada que esse redirect chega no email.. teria que ser pelo frontend mesmo .... Mas enfim, depois vou remover mesmo.
-            redirectTo: 'http://localhost:9000/#/me'
-          },
-      );
-      if (error) throw error;
-      return user;
-  };
+        const { user, error } = await supabase.auth.signUp(
+            { email, password },
+            {
+                data: meta,
+                // TODO: Vou precisar refatorar o código e remover o SupabaseAuthClient.
+                // por nada que esse redirect chega no email.. teria que ser pelo frontend mesmo .... Mas enfim, depois vou remover mesmo.
+                redirectTo: 'http://localhost:9000/#/me',
+            },
+        );
+        if (error) throw error;
+        return user;
+    };
 
     /**
      * Update user email, password, or meta data

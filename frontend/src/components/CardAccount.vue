@@ -8,7 +8,7 @@
 
         <q-card-section horizontal class="justify-between">
             <q-card-section>
-                <h4 class="text-h4" style="margin-top: .75em">
+                <h4 class="text-h4" style="margin-top: 0.75em">
                     <label class="text-subtitle2">Saldo atual</label><br />
                     {{ balance }}
                 </h4>

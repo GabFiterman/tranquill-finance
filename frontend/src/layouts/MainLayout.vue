@@ -43,17 +43,17 @@ const linksList = [
         routeName: 'me',
     },
     {
-      title: 'Contas',
-      caption: '',
-      icon: 'mdi-piggy-bank',
-      routeName: 'createAccount',
+        title: 'Contas',
+        caption: '',
+        icon: 'mdi-piggy-bank',
+        routeName: 'createAccount',
     },
     {
-      title: 'Categorias',
-      caption: '',
-      icon: 'mdi-assistant',
-      routeName: 'createCategory',
-    }
+        title: 'Categorias',
+        caption: '',
+        icon: 'mdi-assistant',
+        routeName: 'createCategory',
+    },
 ];
 
 import { defineComponent, ref, onMounted } from 'vue';

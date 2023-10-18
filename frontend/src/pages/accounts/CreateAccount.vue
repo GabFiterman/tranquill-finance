@@ -131,7 +131,7 @@ export default defineComponent({
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
                     throw new Error(err);
-                })
+                });
         };
 
         const handleOnReset = () => {
