@@ -10,8 +10,8 @@
                             :key="account.id"
                             :name="index"
                         >
-                        <CardAccount :account="account" />
-                      </q-carousel-slide>
+                            <CardAccount :account="account" />
+                        </q-carousel-slide>
                     </q-carousel>
                 </div>
             </template>
@@ -43,10 +43,9 @@ export default defineComponent({
                 .get('/account/get-all')
                 .then((response) => {
                     allAccounts.value = response.data.data;
-                    console.log('Response: ', response.data.data);
                 })
                 .catch((error) => {
-                    console.log('Error: ', error);
+                    throw new Error(error);
                 });
         };
 

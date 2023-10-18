@@ -39,10 +39,6 @@ export default defineComponent({
         const router = useRouter();
         const password = ref('');
 
-        onMounted(() => {
-            console.log('§ § § § § § Mounted Reset Password.');
-        });
-
         const handlePasswordReset = async () => {
             try {
                 await resetPassword(password.value);

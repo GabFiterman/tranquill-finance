@@ -86,8 +86,6 @@ export default defineComponent({
           form.value.category_name = '';
           form.value.category_type = 'Despesa';
           form.value.category_color = '#ff0000';
-
-          console.log('Form was reset');
       };
 
       return {

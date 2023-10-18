@@ -142,8 +142,6 @@ export default defineComponent({
             form.value.has_credit_card = false;
             form.value.total_credit_limit = '';
             form.value.credit_used = '';
-
-            console.log('Form was reset');
         };
 
         return {
