@@ -43,6 +43,11 @@ const routes = [
                 name: 'createCategory',
                 component: () => import('pages/category/CreateCategory.vue'),
             },
+            {
+                path: 'transaction/create',
+                name: 'createTransaction',
+                component: () => import('pages/transaction/CreateTransaction.vue'),
+            },
             // { path: '', component: () => import('pages/Index.vue') }
         ],
         meta: {
