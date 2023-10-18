@@ -123,21 +123,15 @@ export default defineComponent({
         const { notifyError, notifySuccess } = useNotify();
 
         const handleOnSubmit = async () => {
-            console.log('Will Submit: ', form.value);
-
             await api
                 .post(`/account/create`, form.value)
                 .then((res) => {
                     notifySuccess(`Conta ${res.data.data.alias} criada com sucesso!`);
-                    console.log(res);
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
                     throw new Error(err);
                 })
-                .finally(() => {
-                    console.log('Request finished');
-                });
         };
 
         const handleOnReset = () => {

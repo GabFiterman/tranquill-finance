@@ -71,21 +71,15 @@ export default defineComponent({
       const category_types_options = ['Despesa', 'Receita'];
 
       const handleOnSubmit = async () => {
-          console.log('Will Submit: ', form.value);
-
           await api
               .post(`/category/create`, form.value)
               .then((res) => {
-                  notifySuccess(`Conta ${res.data.data.alias} criada com sucesso!`);
-                  console.log(res);
+                  notifySuccess(`${res.data.data.category_type} criada com sucesso!`);
               })
               .catch((err) => {
                   notifyError(`Erro ao criar conta: ${err}`);
                   throw new Error(err);
               })
-              .finally(() => {
-                  console.log('Request finished');
-              });
       };
 
       const handleOnReset = () => {
