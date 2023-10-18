@@ -50,8 +50,6 @@ export default defineComponent({
         const email = ref('');
 
         const handleForgotPassowrd = async () => {
-            console.log('handleForgotPassowrd, email: ', email.value);
-
             try {
                 await sendPasswordRestEmail(email.value);
                 notifySuccess(`Password reset email sent to: ${email.value}`);

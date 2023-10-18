@@ -34,10 +34,15 @@ const routes = [
                 component: () => import('pages/category/List.vue'),
             },
             {
-              path: 'accounts/create',
-              name: 'createAccount',
-              component: () => import('pages/accounts/CreateAccount.vue')
-            }
+                path: 'accounts/create',
+                name: 'createAccount',
+                component: () => import('pages/accounts/CreateAccount.vue'),
+            },
+            {
+                path: 'category/create',
+                name: 'createCategory',
+                component: () => import('pages/category/CreateCategory.vue'),
+            },
             // { path: '', component: () => import('pages/Index.vue') }
         ],
         meta: {
