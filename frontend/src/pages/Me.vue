@@ -10,8 +10,8 @@
                             :key="account.id"
                             :name="index"
                         >
-                            <CardAccount :account="account" />
-                        </q-carousel-slide>
+                        <CardAccount :account="account" />
+                      </q-carousel-slide>
                     </q-carousel>
                 </div>
             </template>
