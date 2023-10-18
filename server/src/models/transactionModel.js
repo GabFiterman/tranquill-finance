@@ -8,7 +8,7 @@ const transactionSchema = new Schema({
     description: { type: String, required: true },
     transaction_date: { type: Date, required: true },
     expected_date: { type: Date, required: false },
-    categories: { type: [ObjectId], required: true },
+    category: { type: ObjectId, required: true },
     account: { type: ObjectId, required: true },
     payment_method: { type: String, required: true }
 })

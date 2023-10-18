@@ -45,14 +45,20 @@ const linksList = [
     {
         title: 'Contas',
         caption: '',
-        icon: 'mdi-piggy-bank',
+        icon: 'mdi-wallet',
         routeName: 'createAccount',
     },
     {
         title: 'Categorias',
         caption: '',
-        icon: 'mdi-assistant',
+        icon: 'mdi-star-settings',
         routeName: 'createCategory',
+    },
+    {
+        title: 'Transações',
+        caption: '',
+        icon: 'mdi-cash-multiple',
+        routeName: 'createTransaction',
     },
 ];
 
