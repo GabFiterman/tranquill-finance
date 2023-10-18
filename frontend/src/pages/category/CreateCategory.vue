@@ -18,15 +18,18 @@
               </div>
               <div class="row">
                   <div class="col-xs-12 col-md-7">
-                      <q-input
-                          filled
-                          v-model="form.category_type"
-                          label="Tipo da Categoria"
-                          lazy-rules
-                          :rules="[
-                              (val) => (val !== null && val !== '') || 'Por favor, digite algo',
-                          ]"
-                      />
+                      <q-select
+                            filled
+                            behavior="menu"
+                            v-model="form.category_type"
+                            :options="category_types_options"
+                            lazy-rules
+                            :rules="[
+                                (val) =>
+                                    (val !== null && val !== '') ||
+                                    'Por favor, selecione um tipo de categoria',
+                            ]"
+                        />
                   </div>
               </div>
               <div class="row">
@@ -61,10 +64,11 @@ export default defineComponent({
   setup() {
       const form = ref({
           category_name: '',
-          category_type: '',
+          category_type: 'Despesa',
           category_color: '#ff0000',
       });
       const { notifyError, notifySuccess } = useNotify();
+      const category_types_options = ['Despesa', 'Receita'];
 
       const handleOnSubmit = async () => {
           console.log('Will Submit: ', form.value);
@@ -86,14 +90,15 @@ export default defineComponent({
 
       const handleOnReset = () => {
           form.value.category_name = '';
-          form.value.category_type = '';
-          form.value.category_color = 'Conta Corrente';
+          form.value.category_type = 'Despesa';
+          form.value.category_color = '#ff0000';
 
           console.log('Form was reset');
       };
 
       return {
           form,
+          category_types_options,
 
           handleOnSubmit,
           handleOnReset,
