@@ -47,6 +47,12 @@ const linksList = [
       caption: '',
       icon: 'mdi-piggy-bank',
       routeName: 'createAccount',
+    },
+    {
+      title: 'Categorias',
+      caption: '',
+      icon: 'mdi-assistant',
+      routeName: 'createCategory',
     }
 ];
 
