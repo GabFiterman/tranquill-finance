@@ -46,7 +46,7 @@ const linksList = [
       title: 'Contas',
       caption: '',
       icon: 'mdi-piggy-bank',
-      routeName: 'accounts',
+      routeName: 'createAccount',
     }
 ];
 

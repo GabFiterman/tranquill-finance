@@ -34,9 +34,9 @@ const routes = [
                 component: () => import('pages/category/List.vue'),
             },
             {
-              path: 'accounts',
-              name: 'accounts',
-              component: () => import('pages/accounts/AccountsPage.vue')
+              path: 'accounts/create',
+              name: 'createAccount',
+              component: () => import('pages/accounts/CreateAccount.vue')
             }
             // { path: '', component: () => import('pages/Index.vue') }
         ],
