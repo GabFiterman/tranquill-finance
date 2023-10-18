@@ -1,21 +1,18 @@
 <template>
-    <q-page class="flex flex-center">
-        <div v-if="user">
-            <div>Hello</div>
-            <template v-if="allAccounts">
-                <div class="q-pa-md">
-                    <q-carousel animated v-model="slide" arrows navigation infinite>
-                        <q-carousel-slide
-                            v-for="(account, index) in allAccounts"
-                            :key="account.id"
-                            :name="index"
-                        >
-                        <CardAccount :account="account" />
-                      </q-carousel-slide>
-                    </q-carousel>
-                </div>
-            </template>
-        </div>
+    <q-page padding>
+        <template v-if="user && allAccounts">
+          <div class="row justify-center">
+            <q-carousel animated v-model="slide" class="col-12 col-md-4" arrows navigation infinite>
+                <q-carousel-slide
+                    v-for="(account, index) in allAccounts"
+                    :key="account.id"
+                    :name="index"
+                >
+                    <CardAccount :account="account" />
+                </q-carousel-slide>
+            </q-carousel>
+          </div>
+        </template>
     </q-page>
 </template>
 
