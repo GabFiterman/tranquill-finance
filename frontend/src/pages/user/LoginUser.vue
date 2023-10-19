@@ -34,7 +34,7 @@
                         color="primary"
                         class="full-width"
                         flat
-                        to="/register"
+                        :to="{ name: 'register-user' }"
                         size="sm"
                     />
                     <q-btn
@@ -58,7 +58,7 @@ import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-    name: 'PageLogin',
+    name: 'LoginUser',
 
     setup() {
         const router = useRouter();

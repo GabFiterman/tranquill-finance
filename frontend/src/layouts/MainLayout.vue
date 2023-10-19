@@ -87,12 +87,12 @@ export default defineComponent({
         const handleLogout = async () => {
             $q.dialog({
                 title: 'Logout',
-                message: 'Do you really want to leave ?',
+                message: 'Deseja realmente sair ?',
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
                 await logout();
-                router.replace({ name: 'login' });
+                router.replace({ name: 'login-user' });
             });
         };
 

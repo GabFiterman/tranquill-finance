@@ -3,23 +3,31 @@ const routes = [
         path: '/',
         component: () => import('layouts/LoginLayout.vue'),
         children: [
-            { path: '', name: 'loginDefault', component: () => import('pages/Login.vue') },
-            { path: 'login', name: 'login', component: () => import('pages/Login.vue') },
-            { path: 'register', name: 'register', component: () => import('pages/Register.vue') },
+            { path: '', name: 'loginDefault', component: () => import('pages/user/LoginUser.vue') },
+            {
+                path: 'login',
+                name: 'login-user',
+                component: () => import('pages/user/LoginUser.vue'),
+            },
+            {
+                path: 'register',
+                name: 'register-user',
+                component: () => import('pages/user/RegisterUser.vue'),
+            },
             {
                 path: 'email-confirmation',
                 name: 'email-confirmation',
-                component: () => import('pages/EmailConfirmation.vue'),
+                component: () => import('pages/user/EmailConfirmation.vue'),
             },
             {
                 path: 'forgot-password',
                 name: 'forgot-password',
-                component: () => import('pages/ForgotPassword.vue'),
+                component: () => import('pages/user/ForgotPassword.vue'),
             },
             {
                 path: 'reset-password',
                 name: 'reset-password',
-                component: () => import('pages/ResetPassword.vue'),
+                component: () => import('pages/user/ResetPassword.vue'),
             },
         ],
     },
@@ -28,11 +36,6 @@ const routes = [
         component: () => import('layouts/MainLayout.vue'),
         children: [
             { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
-            {
-                path: 'category',
-                name: 'category',
-                component: () => import('pages/category/List.vue'),
-            },
             {
                 path: 'accounts/create',
                 name: 'createAccount',
@@ -48,15 +51,11 @@ const routes = [
                 name: 'createTransaction',
                 component: () => import('pages/transaction/CreateTransaction.vue'),
             },
-            // { path: '', component: () => import('pages/Index.vue') }
         ],
         meta: {
             requiresAuth: true,
         },
     },
-
-    // Always leave this as last one,
-    // but you can also remove it
     {
         path: '/:catchAll(.*)*',
         component: () => import('pages/ErrorNotFound.vue'),

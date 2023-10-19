@@ -12,7 +12,7 @@
                     color="dark"
                     class="full-width"
                     rounded
-                    :to="{ name: 'login' }"
+                    :to="{ name: 'login-user' }"
                 />
             </div>
         </div>
