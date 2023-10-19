@@ -36,14 +36,27 @@ export default route(function (/* { store, ssrContext } */) {
 
     Router.beforeEach((to) => {
         const { isLoggedIn } = useAuthUser();
-
         // if (to.hash.includes('type=recovery') && to.name !== 'reset-password') {
         //     const accessToken = to.hash.split('&')[0];
         //     const token = accessToken.replace('#access_token=', '');
         //     return { name: 'reset-password', query: { token } };
         // }
-        if (!isLoggedIn() && to.meta.requiresAuth && !Object.keys(to.query).includes('fromEmail')) {
-            return { name: 'login' };
+
+        if (to.fullPath.includes('type=signup')) {
+            console.log('************* INCLUDES SIGNUP ******************* \n\n\n')
+            return { name: 'login-user', query: { confirmedEmail: true } };
+          }
+
+          if (!isLoggedIn() && to.meta.requiresAuth) {
+          console.log('************* BLOCKED ROUTE ******************* \n\n\n')
+            return { name: 'login-user', query: { blockedRoute: true } };
+        }
+
+        if( isLoggedIn()){
+          if(to.path == '/login' || to.path == '/') {
+            console.log('************* ALREADY LOGGEDIN, AND TRY TO GO HOME ******************* \n\n\n')
+            return { name: 'me' }
+          }
         }
     });
 

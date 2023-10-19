@@ -1,9 +1,9 @@
 const routes = [
     {
-        path: '/',
+        path: '',
         component: () => import('layouts/LoginLayout.vue'),
         children: [
-            { path: '', name: 'loginDefault', component: () => import('pages/user/LoginUser.vue') },
+            { path: '', redirect: 'login' },
             {
                 path: 'login',
                 name: 'login-user',
@@ -32,10 +32,10 @@ const routes = [
         ],
     },
     {
-        path: '/',
-        component: () => import('layouts/MainLayout.vue'),
-        children: [
-            { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
+      path: '/me',
+      component: () => import('layouts/MainLayout.vue'),
+      children: [
+          { path: '', name: 'me', component: () => import('pages/Me.vue') },
             {
                 path: 'accounts/create',
                 name: 'createAccount',

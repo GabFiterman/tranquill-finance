@@ -55,13 +55,14 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import useAuthUser from 'src/composables/UseAuthUser';
 import useNotify from 'src/composables/UseNotify';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 export default defineComponent({
     name: 'LoginUser',
 
     setup() {
         const router = useRouter();
+        const route = useRoute();
 
         const { login, isLoggedIn } = useAuthUser();
 
@@ -73,9 +74,13 @@ export default defineComponent({
         });
 
         onMounted(() => {
-            if (isLoggedIn) {
-                router.push('me');
-            }
+            // NOTE: Routing Treatment
+              if (route.query.confirmedEmail == 'true') {
+                  notifySuccess('Email confirmado com sucesso!');
+                }
+                if (route.query.blockedRoute == 'true') {
+                  notifyError('Você não devia estar aqui! Por favor, efetue login antes!');
+              }
         });
 
         const handleLogin = async () => {
