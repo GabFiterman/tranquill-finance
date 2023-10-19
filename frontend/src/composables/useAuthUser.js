@@ -53,7 +53,10 @@ const useAuthUser = () => {
         //         redirectTo: 'http://localhost:9000/#/me',
         //     },
         // );
-        const { user, error } = await supabase.auth.signUp({ email, password }, { redirect_to: 'http://localhost:9000/#/login' });
+        const { user, error } = await supabase.auth.signUp(
+            { email, password },
+            { redirect_to: 'http://localhost:9000/#/login' },
+        );
         if (error) throw error;
         return user;
     };

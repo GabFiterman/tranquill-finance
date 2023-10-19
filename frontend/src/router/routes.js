@@ -32,10 +32,10 @@ const routes = [
         ],
     },
     {
-      path: '/me',
-      component: () => import('layouts/MainLayout.vue'),
-      children: [
-          { path: '', name: 'me', component: () => import('pages/Me.vue') },
+        path: '/me',
+        component: () => import('layouts/MainLayout.vue'),
+        children: [
+            { path: '', name: 'me', component: () => import('pages/Me.vue') },
             {
                 path: 'accounts/create',
                 name: 'createAccount',

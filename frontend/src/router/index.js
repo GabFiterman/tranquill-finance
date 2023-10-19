@@ -43,20 +43,22 @@ export default route(function (/* { store, ssrContext } */) {
         // }
 
         if (to.fullPath.includes('type=signup')) {
-            console.log('************* INCLUDES SIGNUP ******************* \n\n\n')
+            console.log('************* INCLUDES SIGNUP ******************* \n\n\n');
             return { name: 'login-user', query: { confirmedEmail: true } };
-          }
+        }
 
-          if (!isLoggedIn() && to.meta.requiresAuth) {
-          console.log('************* BLOCKED ROUTE ******************* \n\n\n')
+        if (!isLoggedIn() && to.meta.requiresAuth) {
+            console.log('************* BLOCKED ROUTE ******************* \n\n\n');
             return { name: 'login-user', query: { blockedRoute: true } };
         }
 
-        if( isLoggedIn()){
-          if(to.path == '/login' || to.path == '/') {
-            console.log('************* ALREADY LOGGEDIN, AND TRY TO GO HOME ******************* \n\n\n')
-            return { name: 'me' }
-          }
+        if (isLoggedIn()) {
+            if (to.path == '/login' || to.path == '/') {
+                console.log(
+                    '************* ALREADY LOGGEDIN, AND TRY TO GO HOME ******************* \n\n\n',
+                );
+                return { name: 'me' };
+            }
         }
     });
 

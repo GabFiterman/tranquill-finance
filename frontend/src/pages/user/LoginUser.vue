@@ -75,12 +75,12 @@ export default defineComponent({
 
         onMounted(() => {
             // NOTE: Routing Treatment
-              if (route.query.confirmedEmail == 'true') {
-                  notifySuccess('Email confirmado com sucesso!');
-                }
-                if (route.query.blockedRoute == 'true') {
-                  notifyError('Você não devia estar aqui! Por favor, efetue login antes!');
-              }
+            if (route.query.confirmedEmail == 'true') {
+                notifySuccess('Email confirmado com sucesso!');
+            }
+            if (route.query.blockedRoute == 'true') {
+                notifyError('Você não devia estar aqui! Por favor, efetue login antes!');
+            }
         });
 
         const handleLogin = async () => {
