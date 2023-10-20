@@ -1,6 +1,6 @@
 <template>
     <q-page padding>
-        <q-form class="row justify-center" @submit.prevent="handleForgotPassowrd">
+        <!-- <q-form class="row justify-center" @submit.prevent="handleForgotPassowrd">
             <p class="col-12 text-h5 text-center">Reset Password</p>
             <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
                 <q-input
@@ -31,7 +31,22 @@
                     />
                 </div>
             </div>
-        </q-form>
+        </q-form> -->
+        <div class="q-px-lg">
+            <h1>Oops...</h1>
+            <p>Parece que ainda não tem nada por aqui...</p>
+            <p>
+                Nossos desenvolvedores estão dando duro para que esta funcionalidade em breve seja
+                adicionada :)
+            </p>
+            <q-btn
+              label="Voltar ao início"
+              color="primary"
+              class="ull-width"
+              rounded
+              :to="{ name: 'login-user' }"
+            />
+        </div>
     </q-page>
 </template>
 

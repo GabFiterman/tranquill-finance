@@ -36,11 +36,6 @@ export default route(function (/* { store, ssrContext } */) {
 
     Router.beforeEach((to) => {
         const { isLoggedIn } = useAuthUser();
-        // if (to.hash.includes('type=recovery') && to.name !== 'reset-password') {
-        //     const accessToken = to.hash.split('&')[0];
-        //     const token = accessToken.replace('#access_token=', '');
-        //     return { name: 'reset-password', query: { token } };
-        // }
 
         if (to.fullPath.includes('type=signup')) {
             console.log('************* INCLUDES SIGNUP ******************* \n\n\n');
