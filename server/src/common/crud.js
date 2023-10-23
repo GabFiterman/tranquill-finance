@@ -50,6 +50,24 @@ const readOneDocument = (model) => {
     }
 }
 
+const readAllDocumentsFromUser = (model) => {
+    return async (req, res) => {
+        try {
+            const query = {}
+            query.user_id = req.params.id
+
+            const data = await model.find(query).lean()
+
+            if (!data || data == []) {
+                notFoundRes(res)
+            }
+            successRes(res, data)
+        } catch (err) {
+            errorRes(res, err)
+        }
+    }
+}
+
 const updateDocument = (model) => {
     return async (req, res) => {
         try {
@@ -88,6 +106,7 @@ const deleteDocument = (model) => {
 module.exports = {
     createDocument,
     readAllDocuments,
+    readAllDocumentsFromUser,
     readOneDocument,
     updateDocument,
     deleteDocument
