@@ -51,7 +51,7 @@ export default defineComponent({
 
         const getAccounts = async () => {
             await api
-                .get('/account/get-all')
+                .get(`/account/user/${USER.getUserId}`)
                 .then((response) => {
                     allAccounts.value = response.data.data;
                 })
