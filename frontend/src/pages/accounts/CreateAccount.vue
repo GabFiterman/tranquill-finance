@@ -106,12 +106,14 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import { api } from 'boot/axios';
 import useNotify from 'src/composables/UseNotify';
+import { userStore } from 'src/stores/userStore';
 
 export default defineComponent({
     name: 'CreateAccount',
     setup() {
         const account_types_options = ['Conta Corrente', 'Conta Poupança'];
         const form = ref({
+            user_id: '',
             alias: '',
             bank: '',
             account_type: 'Conta Corrente',
@@ -121,8 +123,11 @@ export default defineComponent({
             credit_used: 0,
         });
         const { notifyError, notifySuccess } = useNotify();
+        const USER = userStore();
 
         const handleOnSubmit = async () => {
+            form.value.user_id = USER.getUserId;
+
             await api
                 .post(`/account/create`, form.value)
                 .then((res) => {

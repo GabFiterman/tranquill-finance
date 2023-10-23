@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const accountSchema = new Schema({
+    user_id: { type: String, required: true },
     alias: { type: String, required: true },
     bank: { type: String, required: true },
     account_type: { type: String, required: true },
