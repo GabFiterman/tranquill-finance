@@ -28,6 +28,7 @@ import { defineComponent, ref, onMounted } from 'vue';
 import useAuthUser from 'src/composables/UseAuthUser';
 import CardAccount from 'src/components/CardAccount.vue';
 import { api } from 'src/boot/axios';
+import { userStore } from 'src/stores/userStore';
 
 export default defineComponent({
     name: 'PageMe',
@@ -37,9 +38,15 @@ export default defineComponent({
     setup() {
         const { user } = useAuthUser();
         const allAccounts = ref([]);
+        const USER = userStore();
 
         onMounted(() => {
-            getAccounts();
+            USER.setUserId(user.value.id);
+            USER.setUserEmail(user.value.email);
+            USER.setUserRole(user.value.role);
+            if (USER.getUserRole) {
+                getAccounts();
+            }
         });
 
         const getAccounts = async () => {
