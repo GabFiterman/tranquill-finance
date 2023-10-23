@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     complete_name: { type: String, required: true },
@@ -13,7 +13,7 @@ const userSchema = new Schema({
     register_date: { type: Date, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    updated_date: { type: Date }
-})
+    updated_date: { type: Date },
+});
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);

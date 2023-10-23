@@ -40,11 +40,11 @@
                 adicionada :)
             </p>
             <q-btn
-              label="Voltar ao início"
-              color="primary"
-              class="ull-width"
-              rounded
-              :to="{ name: 'login-user' }"
+                label="Voltar ao início"
+                color="primary"
+                class="ull-width"
+                rounded
+                :to="{ name: 'login-user' }"
             />
         </div>
     </q-page>

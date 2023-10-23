@@ -1,6 +1,12 @@
 /* eslint-disable no-undef */
-const { categoryModel } = require('../models')
-const { createDocument, readAllDocuments, readOneDocument,  updateDocument, deleteDocument } = require ('../common/crud')
+const { categoryModel } = require('../models');
+const {
+    createDocument,
+    readAllDocuments,
+    readOneDocument,
+    updateDocument,
+    deleteDocument,
+} = require('../common/crud');
 
 exports.createCategory = createDocument(categoryModel);
 exports.getAllCategories = readAllDocuments(categoryModel);
