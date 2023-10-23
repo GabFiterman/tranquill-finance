@@ -1,6 +1,13 @@
 /* eslint-disable no-undef */
-const { accountModel } = require('../models')
-const { createDocument, readAllDocuments, readAllDocumentsFromUser, readOneDocument,  updateDocument, deleteDocument } = require ('../common/crud')
+const { accountModel } = require('../models');
+const {
+    createDocument,
+    readAllDocuments,
+    readAllDocumentsFromUser,
+    readOneDocument,
+    updateDocument,
+    deleteDocument,
+} = require('../common/crud');
 
 exports.createAccount = createDocument(accountModel);
 exports.getAllAccounts = readAllDocuments(accountModel);

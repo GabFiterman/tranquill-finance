@@ -77,9 +77,9 @@ const useAuthUser = () => {
     const sendPasswordRestEmail = async (email) => {
         try {
             await supabase.auth.resetPasswordForEmail(email, {
-              // TODO: pelo visto o problema é que o token está sendo utilizado antes, pelo email, e quando vou utilizá-lo já está expirado;
-              // a sugestão é ou usar captcha ou uma página intermediária, não entendi bem o que quer dizer, mas acredito que eu precisaria entrar em uma
-              // página de confirmação primeiro (passando o link com o token verdadeiro), então sim
+                // TODO: pelo visto o problema é que o token está sendo utilizado antes, pelo email, e quando vou utilizá-lo já está expirado;
+                // a sugestão é ou usar captcha ou uma página intermediária, não entendi bem o que quer dizer, mas acredito que eu precisaria entrar em uma
+                // página de confirmação primeiro (passando o link com o token verdadeiro), então sim
 
                 redirectTo: 'http://localhost:9000/#/reset-password/',
             });
@@ -90,7 +90,7 @@ const useAuthUser = () => {
 
     const passwordReset = async (password) => {
         // FIX: o problema é que basicamente os provedores de email estão gastando o meu token, usando antes de mim...
-          // tenho que mockar o link... o token, colocar captcha ... dar um jeito.
+        // tenho que mockar o link... o token, colocar captcha ... dar um jeito.
         const { data, error } = await supabase.auth.updateUser({ password });
         if (data) console.log(data);
         if (error) console.error(error);

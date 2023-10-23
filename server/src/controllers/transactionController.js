@@ -1,6 +1,12 @@
 /* eslint-disable no-undef */
-const { transactionModel } = require('../models')
-const { createDocument, readAllDocuments, readOneDocument,  updateDocument, deleteDocument } = require ('../common/crud')
+const { transactionModel } = require('../models');
+const {
+    createDocument,
+    readAllDocuments,
+    readOneDocument,
+    updateDocument,
+    deleteDocument,
+} = require('../common/crud');
 
 exports.createTransaction = createDocument(transactionModel);
 exports.getAllTransactions = readAllDocuments(transactionModel);

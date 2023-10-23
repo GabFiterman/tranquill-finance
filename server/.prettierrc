@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 2021
+    },
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 4,
+    "arrowParens": "always",
+    "endOfLine": "auto",
+    "env": {
+        "node": true,
+        "browser": true
+    }
+}
