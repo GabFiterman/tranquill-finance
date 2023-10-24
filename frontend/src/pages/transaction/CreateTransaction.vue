@@ -83,6 +83,7 @@ export default defineComponent({
     name: 'CreateTransaction',
     setup() {
         const form = ref({
+            user_id: '',
             value: 0,
             description: '',
             //TODO: incialmente sempre hoje
@@ -157,11 +158,11 @@ export default defineComponent({
         };
 
         const handleOnSubmit = async () => {
+            form.value.user_id = USER.value.getUserId;
             const send = Object.assign({}, form.value, {
                 category: form.value.category.value,
                 account: form.value.account.value,
             });
-            console.log(send);
 
             await api
                 .post(`/transaction/create`, send)
