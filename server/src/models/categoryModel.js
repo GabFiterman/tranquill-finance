@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
+    user_id: { type: String, required: true },
     category_name: { type: String, required: true },
     category_type: { type: String, required: true, enum: ['Despesa', 'Receita'] },
     category_color: { type: String, required: true },
