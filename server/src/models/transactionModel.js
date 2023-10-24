@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const transactionSchema = new Schema({
+    user_id: { type: String, required: true },
     value: { type: Number, required: true },
     description: { type: String, required: true },
     transaction_date: { type: Date, required: true },
