@@ -74,9 +74,10 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, computed } from 'vue';
 import { api } from 'boot/axios';
 import useNotify from 'src/composables/UseNotify';
+import { userStore } from 'src/stores/userStore';
 
 export default defineComponent({
     name: 'CreateTransaction',
@@ -98,6 +99,9 @@ export default defineComponent({
         const allCategories = ref([]);
         const allAccounts = ref([]);
 
+        // NOTE: computed runs before onMounted hook
+        const USER = computed(() => userStore());
+
         const { notifyError, notifySuccess } = useNotify();
 
         onMounted(() => {
@@ -107,7 +111,7 @@ export default defineComponent({
 
         const getCategories = async () => {
             await api
-                .get(`/category/get-all`)
+                .get(`/category/user/${USER.value.getUserId}`)
                 .then((res) => {
                     allCategories.value = res.data.data.map((category) => {
                         return {
@@ -131,7 +135,7 @@ export default defineComponent({
 
         const getAccounts = async () => {
             await api
-                .get(`/account/get-all`)
+                .get(`/account/user/${USER.value.getUserId}`)
                 .then((res) => {
                     allAccounts.value = res.data.data.map((account) => {
                         return {
