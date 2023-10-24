@@ -54,19 +54,23 @@
 import { defineComponent, ref } from 'vue';
 import { api } from 'boot/axios';
 import useNotify from 'src/composables/UseNotify';
+import { userStore } from 'src/stores/userStore';
 
 export default defineComponent({
     name: 'createCategory',
     setup() {
         const form = ref({
+            user_id: '',
             category_name: '',
             category_type: 'Despesa',
             category_color: '#ff0000',
         });
         const { notifyError, notifySuccess } = useNotify();
         const category_types_options = ['Despesa', 'Receita'];
+        const USER = userStore();
 
         const handleOnSubmit = async () => {
+            form.value.user_id = USER.getUserId;
             await api
                 .post(`/category/create`, form.value)
                 .then((res) => {
