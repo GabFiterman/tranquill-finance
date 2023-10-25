@@ -176,9 +176,11 @@ export default defineComponent({
         };
 
         const handleOnReset = () => {
-            form.value.category_name = '';
-            form.value.category_type = 'Despesa';
-            form.value.category_color = '#ff0000';
+            form.value.value = 0;
+            form.value.description = '';
+            form.value.category = '';
+            form.value.account = '';
+            form.value.payment_method = 'Debit';
         };
 
         return {
