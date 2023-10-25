@@ -4,7 +4,6 @@
             <h3>History transaction</h3>
         </div>
         <div v-if="allTransactions">
-            <!-- entrada / saída -->
             <div
                 v-for="(transaction, index) in allTransactions"
                 :key="transaction.id"
