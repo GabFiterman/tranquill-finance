@@ -1,21 +1,57 @@
 <template>
-  <q-page padding>
-    <div class="row">
-      <h3>History transaction</h3>
-    </div>
-    <div class="q-px-md">
-      <!-- entrada / saída -->
-      lista dos cards
-    </div>
-  </q-page>
+    <q-page padding>
+        <div class="row">
+            <h3>History transaction</h3>
+        </div>
+        <div v-if="allTransactions">
+            <!-- entrada / saída -->
+            <div
+                v-for="(transaction, index) in allTransactions"
+                :key="transaction.id"
+                :name="index"
+                class="q-my-md"
+            >
+                <CardHistoryTransaction :transaction="transaction" />
+            </div>
+        </div>
+    </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted, computed } from 'vue';
+import CardHistoryTransaction from 'src/components/CardHistoryTransaction.vue';
+import { userStore } from 'src/stores/userStore';
+import { api } from 'src/boot/axios';
 
 export default defineComponent({
-  setup() {
+    name: 'HistoryTransaction',
+    components: {
+        CardHistoryTransaction,
+    },
+    setup() {
+        const USER = computed(() => userStore());
+        const allTransactions = ref([]);
 
-  },
-})
+        onMounted(() => {
+            if (USER.value.getUserId) {
+                getTransactions();
+            }
+        });
+
+        const getTransactions = async () => {
+            await api
+                .get(`/transaction/user/${USER.value.getUserId}`)
+                .then((response) => {
+                    allTransactions.value = response.data.data;
+                })
+                .catch((error) => {
+                    throw new Error(error);
+                });
+        };
+
+        return {
+            allTransactions,
+        };
+    },
+});
 </script>
