@@ -51,6 +51,11 @@ const routes = [
                 name: 'createTransaction',
                 component: () => import('pages/transaction/CreateTransaction.vue'),
             },
+            {
+                path: 'transaction/history',
+                name: 'historyTransaction',
+                component: () => import('pages/transaction/HistoryTransaction.vue'),
+            },
         ],
         meta: {
             requiresAuth: true,

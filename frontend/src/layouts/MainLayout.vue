@@ -56,14 +56,20 @@ const linksList = [
     },
     {
         title: 'Transações',
-        caption: '',
+        caption: 'Criar',
         icon: 'mdi-cash-multiple',
         routeName: 'createTransaction',
+    },
+    {
+        title: 'Transações',
+        caption: 'Histórico',
+        icon: 'mdi-history',
+        routeName: 'historyTransaction',
     },
 ];
 
 import { defineComponent, ref, onMounted } from 'vue';
-import useAuthUser from 'src/composables/UseAuthUser';
+import useAuthUser from 'src/composables/useAuthUser';
 import useApi from 'src/composables/UseApi';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
