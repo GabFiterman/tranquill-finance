@@ -6,6 +6,14 @@ const ObjectId = Schema.Types.ObjectId;
 const transactionSchema = new Schema({
     user_id: { type: String, required: true },
     value: { type: Number, required: true },
+    transaction_type: {
+        type: String,
+        required: true,
+        validate: {
+            validator: (value) => value === 'receita' || value === 'despesa',
+            message: 'transaction_type must be "receita" or "despesa"',
+        },
+    },
     description: { type: String, required: true },
     transaction_date: { type: Date, required: true },
     expected_date: { type: Date, required: false },
