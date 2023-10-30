@@ -10,6 +10,7 @@
                         <q-input
                             filled
                             v-model="form.value"
+                            type="number"
                             label="Valor da transação"
                             lazy-rules
                             :rules="[(val) => (val && val.length > 0) || 'Por favor, digite algo']"
@@ -165,6 +166,7 @@ export default defineComponent({
                             value: account._id,
                             bank: account.bank,
                             credit_card: account.credit_card,
+                            balance: account.balance,
                         };
                     });
                     if (allAccounts.value.length < 1) {
@@ -189,6 +191,7 @@ export default defineComponent({
                 .post(`/transaction/create`, send)
                 .then((res) => {
                     notifySuccess(`${res.data.data.type} criada com sucesso!`);
+                    updateAccount();
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
@@ -196,21 +199,35 @@ export default defineComponent({
                 });
         };
 
-        // const updateAccount = async () => {
-        //   const send = {
-        //     _id: form.value._id,
-        //     balance: balance + form.value.
-        //   }
-        //   await api
-        //     .put(`/account/update`, send)
-        //     .then((res) => {
-        //       notifySuccess('Conta UPDATED com sucesso!')
-        //     })
-        //     .catch((err) => {
-        //       notifyError(`Erro ao UPDATE conta: ${err}`)
-        //       throw new Error(err);
-        //     })
-        // }
+        const updateAccount = async () => {
+            const correctAccount = allAccounts.value.filter((account) => {
+                return account.value === form.value.account.value;
+            });
+            const balance = correctAccount[0].balance;
+            const formValue = parseFloat(form.value.value);
+
+            let newBalance = null;
+            if (form.value.type === 'despesa') {
+                newBalance = balance - formValue;
+            } else {
+                newBalance = balance + formValue;
+            }
+
+            const send = {
+                _id: form.value.account.value,
+                balance: newBalance,
+            };
+
+            await api
+                .put(`/account/update`, send)
+                .then((res) => {
+                    notifySuccess('Conta UPDATED com sucesso!');
+                })
+                .catch((err) => {
+                    notifyError(`Erro ao UPDATE conta: ${err}`);
+                    throw new Error(err);
+                });
+        };
 
         const handleOnReset = () => {
             form.value.value = 0;
