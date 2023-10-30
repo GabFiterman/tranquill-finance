@@ -30,11 +30,29 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
+                        <q-radio
+                            fille
+                            v-model="form.type"
+                            type="radio"
+                            val="despesa"
+                            label="Despesa"
+                        />
+                        <q-radio
+                            fille
+                            v-model="form.type"
+                            type="radio"
+                            val="receita"
+                            label="Receita"
+                        />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-7">
                         <q-select
                             filled
-                            behavior="menu"
                             v-model="form.category"
-                            :options="allCategories"
+                            :options="filteredCategories"
                             lazy-rules
                             :rules="[
                                 (val) =>
@@ -49,7 +67,6 @@
                     <div class="col-xs-12 col-md-7">
                         <q-select
                             filled
-                            behavior="menu"
                             v-model="form.account"
                             :options="allAccounts"
                             lazy-rules
@@ -86,20 +103,18 @@ export default defineComponent({
             user_id: '',
             value: 0,
             description: '',
+            type: 'despesa',
             //TODO: incialmente sempre hoje
             date_completed: new Date().toISOString(),
             date_expected: new Date().toISOString(),
-            //TODO: preciso puxar as categorias primeiro
             category: '',
-            //TODO: preciso puxar as contas primeiro
             account: '',
             //TODO: preciso validar se a conta possui crédito primeiro
-            payment_method: 'Debit',
+            payment_method: 'debito',
         });
 
         const allCategories = ref([]);
         const allAccounts = ref([]);
-
         // NOTE: computed runs before onMounted hook
         const USER = computed(() => userStore());
 
@@ -133,6 +148,12 @@ export default defineComponent({
                     throw new Error(err);
                 });
         };
+
+        const filteredCategories = computed(() =>
+            allCategories.value.filter((category) => {
+                return category.type === form.value.type;
+            }),
+        );
 
         const getAccounts = async () => {
             await api
@@ -194,13 +215,15 @@ export default defineComponent({
         const handleOnReset = () => {
             form.value.value = 0;
             form.value.description = '';
+            form.value.type = 'despesa';
             form.value.category = '';
             form.value.account = '';
-            form.value.payment_method = 'Debit';
+            form.value.payment_method = 'debito';
         };
 
         return {
             form,
+            filteredCategories,
             allCategories,
             allAccounts,
 
