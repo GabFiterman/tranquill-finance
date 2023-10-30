@@ -87,8 +87,8 @@ export default defineComponent({
             value: 0,
             description: '',
             //TODO: incialmente sempre hoje
-            transaction_date: new Date().toISOString(),
-            expected_date: new Date().toISOString(),
+            date_completed: new Date().toISOString(),
+            date_expected: new Date().toISOString(),
             //TODO: preciso puxar as categorias primeiro
             category: '',
             //TODO: preciso puxar as contas primeiro
@@ -116,7 +116,7 @@ export default defineComponent({
                 .then((res) => {
                     allCategories.value = res.data.data.map((category) => {
                         return {
-                            label: category.category_name,
+                            label: category.name,
                             value: category._id,
                             type: category.type,
                         };
@@ -143,7 +143,7 @@ export default defineComponent({
                             label: account.alias,
                             value: account._id,
                             bank: account.bank,
-                            has_credit_card: account.has_credit_card,
+                            credit_card: account.credit_card,
                         };
                     });
                     if (allAccounts.value.length < 1) {
@@ -167,13 +167,29 @@ export default defineComponent({
             await api
                 .post(`/transaction/create`, send)
                 .then((res) => {
-                    notifySuccess(`${res.data.data.category_type} criada com sucesso!`);
+                    notifySuccess(`${res.data.data.type} criada com sucesso!`);
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
                     throw new Error(err);
                 });
         };
+
+        // const updateAccount = async () => {
+        //   const send = {
+        //     _id: form.value._id,
+        //     balance: balance + form.value.
+        //   }
+        //   await api
+        //     .put(`/account/update`, send)
+        //     .then((res) => {
+        //       notifySuccess('Conta UPDATED com sucesso!')
+        //     })
+        //     .catch((err) => {
+        //       notifyError(`Erro ao UPDATE conta: ${err}`)
+        //       throw new Error(err);
+        //     })
+        // }
 
         const handleOnReset = () => {
             form.value.value = 0;

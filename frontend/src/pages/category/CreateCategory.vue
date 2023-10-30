@@ -9,7 +9,7 @@
                     <div class="col-xs-12 col-md-7">
                         <q-input
                             filled
-                            v-model="form.category_name"
+                            v-model="form.name"
                             label="Nome da Categoria"
                             lazy-rules
                             :rules="[(val) => (val && val.length > 0) || 'Por favor, digite algo']"
@@ -21,9 +21,10 @@
                         <q-select
                             filled
                             behavior="menu"
-                            v-model="form.category_type"
-                            :options="category_types_options"
+                            v-model="form.type"
+                            :options="types_options"
                             lazy-rules
+                            class="text-capitalize"
                             :rules="[
                                 (val) =>
                                     (val !== null && val !== '') ||
@@ -35,7 +36,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <span>Cor da Categoria</span>
-                        <q-input borderless v-model="form.category_color" type="color" />
+                        <q-input borderless v-model="form.color" type="color" />
                     </div>
                 </div>
 
@@ -61,12 +62,12 @@ export default defineComponent({
     setup() {
         const form = ref({
             user_id: '',
-            category_name: '',
-            category_type: 'Despesa',
-            category_color: '#ff0000',
+            name: '',
+            type: 'despesa',
+            color: '#ff0000',
         });
         const { notifyError, notifySuccess } = useNotify();
-        const category_types_options = ['Despesa', 'Receita'];
+        const types_options = ['despesa', 'receita'];
         const USER = userStore();
 
         const handleOnSubmit = async () => {
@@ -74,7 +75,7 @@ export default defineComponent({
             await api
                 .post(`/category/create`, form.value)
                 .then((res) => {
-                    notifySuccess(`${res.data.data.category_type} criada com sucesso!`);
+                    notifySuccess(`${res.data.data.type} criada com sucesso!`);
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
@@ -83,14 +84,14 @@ export default defineComponent({
         };
 
         const handleOnReset = () => {
-            form.value.category_name = '';
-            form.value.category_type = 'Despesa';
-            form.value.category_color = '#ff0000';
+            form.value.name = '';
+            form.value.type = 'despesa';
+            form.value.color = '#ff0000';
         };
 
         return {
             form,
-            category_types_options,
+            types_options,
 
             handleOnSubmit,
             handleOnReset,

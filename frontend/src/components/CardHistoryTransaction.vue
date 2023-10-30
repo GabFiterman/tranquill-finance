@@ -11,9 +11,7 @@
                 <span class="text-caption">{{ payment_method }}</span>
                 <h3
                     :class="
-                        transactionCategory?.category_type === 'Receita'
-                            ? 'text-positive'
-                            : 'text-negative'
+                        transactionCategory?.type === 'Receita' ? 'text-positive' : 'text-negative'
                     "
                     class="text-bold"
                 >
@@ -38,7 +36,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { value, description, transaction_date, category, account, payment_method } =
+        const { value, description, date_completed, category, account, payment_method } =
             props.transaction;
         const transactionAccount = ref(null);
         const transactionCategory = ref(null);
@@ -73,12 +71,12 @@ export default defineComponent({
         return {
             value,
             description,
-            transaction_date,
+            date_completed,
             category,
             transactionAccount,
             transactionCategory,
             payment_method,
-            formatedDate: dayjs(transaction_date).format('DD-MM-YYYY'),
+            formatedDate: dayjs(date_completed).format('DD-MM-YYYY'),
         };
     },
 });

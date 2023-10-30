@@ -38,12 +38,12 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { alias, bank, account_type, balance } = props.account;
+        const { alias, bank, type, balance } = props.account;
 
         return {
             alias,
             bank,
-            account_type,
+            type,
             balance,
         };
     },
