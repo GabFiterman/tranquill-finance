@@ -1,13 +1,23 @@
 /* eslint-disable no-undef */
 
-const errorRes = (res, err, errMsg = 'Failed operation', statusCode = 500) => {
-    console.error('ERROR - ErrorRes:', err);
-    return res.status(statusCode).json({ success: false, error: errMsg });
+const errorRes = (
+    res,
+    errorMessage = 'Failed operation',
+    errorType = 'Not classified',
+    statusCode = 500,
+) => {
+    console.error('ERROR - ErrorRes:', errorType);
+    return res.status(statusCode).json({ success: false, errorType, errorMessage });
 };
 
-const notFoundRes = (res, err, errMsg = 'Not Found Document', statusCode = 404) => {
-    console.error('ERROR - NotFoundRes:', err);
-    return res.status(statusCode).json({ success: false, error: errMsg });
+const notFoundRes = (
+    res,
+    errorMessage = 'Cannot found your document, please customize this message.',
+    errorType = 'Document not found',
+    statusCode = 404,
+) => {
+    console.error('ERROR - NotFoundRes:', errorType);
+    return res.status(statusCode).json({ success: false, errorType, errorMessage });
 };
 
 const successRes = (res, data = {}, statusCode = 200) => {
