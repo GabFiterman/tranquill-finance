@@ -13,6 +13,8 @@ router.get('/:id', accountController.getOneAccount);
 router.get('/user/:id', accountController.getAllAccountsFromUser);
 // Faz update em qualquer informação de uma conta específica baseado em um _id
 router.put('/update', accountController.updateAccount);
+// Faz atualiza a conta com "receita" ou "despesa"
+router.put('/update-balance', accountController.updateAccountBalance);
 // Deleta uma conta baseado em um _id
 router.delete('/delete', accountController.deleteAccount);
 
