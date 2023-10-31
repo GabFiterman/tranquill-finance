@@ -11,7 +11,7 @@
                 <span class="text-caption">{{ payment_method }}</span>
                 <h3
                     :class="
-                        transactionCategory?.type === 'Receita' ? 'text-positive' : 'text-negative'
+                        transactionCategory?.type === 'receita' ? 'text-positive' : 'text-negative'
                     "
                     class="text-bold"
                 >
