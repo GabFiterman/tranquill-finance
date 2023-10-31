@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const { errorRes, notFoundRes, successRes, createdRes } = require('./response');
 
-const createDocument = (model) => {
+const createDocument = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const newData = new model(req.body);
@@ -9,14 +9,17 @@ const createDocument = (model) => {
             if (!createdData) {
                 notFoundRes(res);
             }
-            createdRes(res, createdData);
+            if (returnRes) {
+                createdRes(res, createdData);
+            }
+            return { res, createdData };
         } catch (err) {
             errorRes(res, err);
         }
     };
 };
 
-const readAllDocuments = (model) => {
+const readAllDocuments = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const data = await model.find().lean();
@@ -25,14 +28,17 @@ const readAllDocuments = (model) => {
                 notFoundRes(res);
             }
 
-            successRes(res, data);
+            if (returnRes) {
+                successRes(res, data);
+            }
+            return { res, data };
         } catch (err) {
             errorRes(res, err);
         }
     };
 };
 
-const readOneDocument = (model) => {
+const readOneDocument = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const query = {};
@@ -43,14 +49,17 @@ const readOneDocument = (model) => {
             if (!data || data == []) {
                 notFoundRes(res);
             }
-            successRes(res, data);
+            if (returnRes) {
+                successRes(res, data);
+            }
+            return { res, data };
         } catch (err) {
             errorRes(res, err);
         }
     };
 };
 
-const readAllDocumentsFromUser = (model) => {
+const readAllDocumentsFromUser = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const query = {};
@@ -61,14 +70,17 @@ const readAllDocumentsFromUser = (model) => {
             if (!data || data == []) {
                 notFoundRes(res);
             }
-            successRes(res, data);
+            if (returnRes) {
+                successRes(res, data);
+            }
+            return { res, data };
         } catch (err) {
             errorRes(res, err);
         }
     };
 };
 
-const updateDocument = (model) => {
+const updateDocument = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const { _id } = req.body;
@@ -79,14 +91,17 @@ const updateDocument = (model) => {
                 res.status(404).json({ error: 'Document not found' });
             }
 
-            successRes(res, updatedData);
+            if (returnRes) {
+                successRes(res, updatedData);
+            }
+            return { res, updatedData };
         } catch (err) {
             errorRes(res, err);
         }
     };
 };
 
-const deleteDocument = (model) => {
+const deleteDocument = (model, returnRes = true) => {
     return async (req, res) => {
         try {
             const { _id } = req.body;
@@ -96,7 +111,10 @@ const deleteDocument = (model) => {
                 notFoundRes(res);
             }
 
-            successRes(res, deletedData);
+            if (returnRes) {
+                successRes(res, deletedData);
+            }
+            return { res, deletedData };
         } catch (err) {
             errorRes(res, err);
         }
