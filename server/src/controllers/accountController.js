@@ -20,7 +20,7 @@ exports.getOneAccount = readOneDocument(accountModel);
 
 exports.updateAccount = updateDocument(accountModel);
 
-exports.updateAccountBalance = async (req, res) => {
+exports.updateAccountBalance = async (req, res, returnRes = true) => {
     try {
         const { _id, value, type } = req.body;
         const account = await accountModel.findById(_id);
@@ -39,7 +39,9 @@ exports.updateAccountBalance = async (req, res) => {
 
         const updatedAccount = await account.save();
 
-        successRes(res, updatedAccount);
+        if (returnRes) {
+            successRes(res, updatedAccount);
+        }
     } catch (err) {
         if (err.message.includes('at path "_id"')) {
             return notFoundRes(res, 'Account not found');
