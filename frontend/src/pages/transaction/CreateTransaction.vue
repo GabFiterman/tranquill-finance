@@ -7,6 +7,7 @@
             <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-sm">
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
+                        <!-- TODO: atualmente só aceita inteiros, precisa começar a aceitar floats! -->
                         <q-input
                             filled
                             v-model="form.value"
@@ -182,7 +183,9 @@ export default defineComponent({
 
         const handleOnSubmit = async () => {
             form.value.user_id = USER.value.getUserId;
+
             const send = Object.assign({}, form.value, {
+                value: parseFloat(form.value.value),
                 category: form.value.category.value,
                 account: form.value.account.value,
             });
@@ -191,40 +194,9 @@ export default defineComponent({
                 .post(`/transaction/create`, send)
                 .then((res) => {
                     notifySuccess(`${res.data.data.type} criada com sucesso!`);
-                    updateAccount();
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
-                    throw new Error(err);
-                });
-        };
-
-        const updateAccount = async () => {
-            const correctAccount = allAccounts.value.filter((account) => {
-                return account.value === form.value.account.value;
-            });
-            const balance = correctAccount[0].balance;
-            const formValue = parseFloat(form.value.value);
-
-            let newBalance = null;
-            if (form.value.type === 'despesa') {
-                newBalance = balance - formValue;
-            } else {
-                newBalance = balance + formValue;
-            }
-
-            const send = {
-                _id: form.value.account.value,
-                balance: newBalance,
-            };
-
-            await api
-                .put(`/account/update`, send)
-                .then((res) => {
-                    notifySuccess('Conta UPDATED com sucesso!');
-                })
-                .catch((err) => {
-                    notifyError(`Erro ao UPDATE conta: ${err}`);
                     throw new Error(err);
                 });
         };
