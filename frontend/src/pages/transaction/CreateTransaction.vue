@@ -7,9 +7,11 @@
             <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-sm">
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
+                        <!-- TODO: atualmente só aceita inteiros, precisa começar a aceitar floats! -->
                         <q-input
                             filled
                             v-model="form.value"
+                            type="number"
                             label="Valor da transação"
                             lazy-rules
                             :rules="[(val) => (val && val.length > 0) || 'Por favor, digite algo']"
@@ -30,11 +32,29 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
+                        <q-radio
+                            fille
+                            v-model="form.type"
+                            type="radio"
+                            val="despesa"
+                            label="Despesa"
+                        />
+                        <q-radio
+                            fille
+                            v-model="form.type"
+                            type="radio"
+                            val="receita"
+                            label="Receita"
+                        />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-7">
                         <q-select
                             filled
-                            behavior="menu"
                             v-model="form.category"
-                            :options="allCategories"
+                            :options="filteredCategories"
                             lazy-rules
                             :rules="[
                                 (val) =>
@@ -49,7 +69,6 @@
                     <div class="col-xs-12 col-md-7">
                         <q-select
                             filled
-                            behavior="menu"
                             v-model="form.account"
                             :options="allAccounts"
                             lazy-rules
@@ -86,20 +105,18 @@ export default defineComponent({
             user_id: '',
             value: 0,
             description: '',
+            type: 'despesa',
             //TODO: incialmente sempre hoje
-            transaction_date: new Date().toISOString(),
-            expected_date: new Date().toISOString(),
-            //TODO: preciso puxar as categorias primeiro
+            date_completed: new Date().toISOString(),
+            date_expected: new Date().toISOString(),
             category: '',
-            //TODO: preciso puxar as contas primeiro
             account: '',
             //TODO: preciso validar se a conta possui crédito primeiro
-            payment_method: 'Debit',
+            payment_method: 'debito',
         });
 
         const allCategories = ref([]);
         const allAccounts = ref([]);
-
         // NOTE: computed runs before onMounted hook
         const USER = computed(() => userStore());
 
@@ -116,7 +133,7 @@ export default defineComponent({
                 .then((res) => {
                     allCategories.value = res.data.data.map((category) => {
                         return {
-                            label: category.category_name,
+                            label: category.name,
                             value: category._id,
                             type: category.type,
                         };
@@ -134,6 +151,12 @@ export default defineComponent({
                 });
         };
 
+        const filteredCategories = computed(() =>
+            allCategories.value.filter((category) => {
+                return category.type === form.value.type;
+            }),
+        );
+
         const getAccounts = async () => {
             await api
                 .get(`/account/user/${USER.value.getUserId}`)
@@ -143,7 +166,8 @@ export default defineComponent({
                             label: account.alias,
                             value: account._id,
                             bank: account.bank,
-                            has_credit_card: account.has_credit_card,
+                            credit_card: account.credit_card,
+                            balance: account.balance,
                         };
                     });
                     if (allAccounts.value.length < 1) {
@@ -159,7 +183,9 @@ export default defineComponent({
 
         const handleOnSubmit = async () => {
             form.value.user_id = USER.value.getUserId;
+
             const send = Object.assign({}, form.value, {
+                value: parseFloat(form.value.value),
                 category: form.value.category.value,
                 account: form.value.account.value,
             });
@@ -167,7 +193,7 @@ export default defineComponent({
             await api
                 .post(`/transaction/create`, send)
                 .then((res) => {
-                    notifySuccess(`${res.data.data.category_type} criada com sucesso!`);
+                    notifySuccess(`${res.data.data.type} criada com sucesso!`);
                 })
                 .catch((err) => {
                     notifyError(`Erro ao criar conta: ${err}`);
@@ -176,13 +202,17 @@ export default defineComponent({
         };
 
         const handleOnReset = () => {
-            form.value.category_name = '';
-            form.value.category_type = 'Despesa';
-            form.value.category_color = '#ff0000';
+            form.value.value = 0;
+            form.value.description = '';
+            form.value.type = 'despesa';
+            form.value.category = '';
+            form.value.account = '';
+            form.value.payment_method = 'debito';
         };
 
         return {
             form,
+            filteredCategories,
             allCategories,
             allAccounts,
 

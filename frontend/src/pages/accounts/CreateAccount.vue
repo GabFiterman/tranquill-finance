@@ -34,8 +34,8 @@
                         <q-select
                             filled
                             behavior="menu"
-                            v-model="form.account_type"
-                            :options="account_types_options"
+                            v-model="form.type"
+                            :options="types_options"
                             lazy-rules
                             :rules="[
                                 (val) =>
@@ -64,17 +64,17 @@
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-toggle v-model="form.has_credit_card" label="Possui crédito?" />
+                        <q-toggle v-model="form.credit_card" label="Possui crédito?" />
                     </div>
                 </div>
 
-                <template v-if="form.has_credit_card">
+                <template v-if="form.credit_card">
                     <div class="row">
                         <div class="col-12 col-md-7">
                             <q-input
                                 filled
                                 type="number"
-                                v-model="form.total_credit_limit"
+                                v-model="form.credit_limit"
                                 label="Crédito total liberado"
                             />
                         </div>
@@ -111,15 +111,15 @@ import { userStore } from 'src/stores/userStore';
 export default defineComponent({
     name: 'CreateAccount',
     setup() {
-        const account_types_options = ['Conta Corrente', 'Conta Poupança'];
+        const types_options = ['Conta Corrente', 'Conta Poupança'];
         const form = ref({
             user_id: '',
             alias: '',
             bank: '',
-            account_type: 'Conta Corrente',
+            type: 'Conta Corrente',
             balance: 0,
-            has_credit_card: false,
-            total_credit_limit: 0,
+            credit_card: false,
+            credit_limit: 0,
             credit_used: 0,
         });
         const { notifyError, notifySuccess } = useNotify();
@@ -142,17 +142,16 @@ export default defineComponent({
         const handleOnReset = () => {
             form.value.alias = '';
             form.value.bank = '';
-            form.value.account_type = 'Conta Corrente';
+            form.value.type = 'Conta Corrente';
             form.value.balance = 0;
-            form.value.has_credit_card = false;
-            form.value.total_credit_limit = '';
+            form.value.credit_card = false;
+            form.value.credit_limit = '';
             form.value.credit_used = '';
         };
 
         return {
             form,
-            account_types_options,
-
+            types_options,
             handleOnSubmit,
             handleOnReset,
         };
