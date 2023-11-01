@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const { accountModel } = require('../models');
+const { accountModel, transactionModel } = require('../models');
 const {
     createDocument,
     readAllDocuments,
@@ -46,6 +46,34 @@ exports.updateAccountBalance = async (req, res, returnRes = true) => {
         if (err.message.includes('at path "_id"')) {
             return notFoundRes(res, 'Account not found');
         }
+        errorRes(res, err);
+    }
+};
+
+exports.calculateAccountTotal = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const transactions = await transactionModel.find({ account: id });
+
+        let totalRevenue = 0;
+        let totalExpense = 0;
+
+        transactions.forEach((transaction) => {
+            if (transaction.type === 'receita') {
+                totalRevenue += transaction.value;
+            } else if (transaction.type === 'despesa') {
+                totalExpense += transaction.value;
+            }
+        });
+
+        const total = totalRevenue - totalExpense;
+
+        res.json({
+            totalExpense,
+            totalRevenue,
+            total,
+        });
+    } catch (err) {
         errorRes(res, err);
     }
 };

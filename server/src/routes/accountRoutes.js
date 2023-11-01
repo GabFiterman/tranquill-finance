@@ -9,6 +9,8 @@ router.post('/create', accountController.createAccount);
 router.get('/get-all', accountController.getAllAccounts);
 // Busca uma conta específica baseado em um _id
 router.get('/:id', accountController.getOneAccount);
+// Busca os valores totais da movimentação de uma conta específica baseado em um _id
+router.get('/:id/totals', accountController.calculateAccountTotal);
 // Busca todas as contas de um usuário baseados em um user_id
 router.get('/user/:id', accountController.getAllAccountsFromUser);
 // Faz update em qualquer informação de uma conta específica baseado em um _id
