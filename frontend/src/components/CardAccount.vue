@@ -13,21 +13,22 @@
                     {{ balance }}
                 </h4>
 
-                <p class="text-positive">15 de out</p>
-                <p class="text-negative">06 de out</p>
+                <p class="text-positive">next recive date</p>
+                <p class="text-negative">next payment date</p>
             </q-card-section>
 
             <q-card-section>
-                <h5 class="text-positive">+ 5.520</h5>
-                <h5 class="text-negative">- 875</h5>
-                <h5 class="text-dark">= 1.225</h5>
+                <h5 class="text-positive">+ {{ totals.totalRevenue }}</h5>
+                <h5 class="text-negative">- {{ totals.totalExpense }}</h5>
+                <h5 class="text-dark">= {{ totals.total }}</h5>
             </q-card-section>
         </q-card-section>
     </q-card>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import { api } from 'src/boot/axios';
 
 export default defineComponent({
     name: 'CardAccount',
@@ -38,13 +39,30 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { alias, bank, type, balance } = props.account;
+        const { _id, alias, bank, type, balance } = props.account;
+        const totals = ref({});
+
+        onMounted(() => {
+            getTotals();
+        });
+
+        const getTotals = async () => {
+            await api
+                .get(`/account/${_id}/totals`)
+                .then((response) => {
+                    totals.value = response.data;
+                })
+                .catch((error) => {
+                    throw new Error(error);
+                });
+        };
 
         return {
             alias,
             bank,
             type,
             balance,
+            totals,
         };
     },
 });
