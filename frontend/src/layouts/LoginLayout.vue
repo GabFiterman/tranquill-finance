@@ -1,7 +1,7 @@
 <template>
     <q-layout view="lHh Lpr lFf" class="login-background">
         <div class="row justify-center q-py-lg">
-            <label class="text-italic text-subtitle1">
+            <label class="text-italic text-subtitle1 opacity-40">
                 {{ $route.meta.label }}
             </label>
         </div>
