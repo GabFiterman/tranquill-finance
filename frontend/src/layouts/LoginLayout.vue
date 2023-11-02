@@ -1,10 +1,10 @@
 <template>
-    <q-layout view="lHh Lpr lFf">
-        <q-header elevated>
-            <q-toolbar>
-                <q-toolbar-title> Tranquill Finance | {{ $route.name }} </q-toolbar-title>
-            </q-toolbar>
-        </q-header>
+    <q-layout view="lHh Lpr lFf" class="login-background">
+        <div class="row justify-center q-py-lg">
+            <label class="text-italic text-subtitle1">
+                {{ $route.meta.label }}
+            </label>
+        </div>
 
         <q-page-container>
             <router-view />
