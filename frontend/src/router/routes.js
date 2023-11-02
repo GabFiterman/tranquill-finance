@@ -8,26 +8,41 @@ const routes = [
                 path: 'login',
                 name: 'login-user',
                 component: () => import('pages/user/LoginUser.vue'),
+                meta: {
+                  label: 'login',
+                }
             },
             {
                 path: 'register',
                 name: 'register-user',
                 component: () => import('pages/user/RegisterUser.vue'),
+                meta: {
+                  label: 'registre-se',
+                }
             },
             {
                 path: 'email-confirmation',
                 name: 'email-confirmation',
                 component: () => import('pages/user/EmailConfirmation.vue'),
+                meta: {
+                  label: 'confirme seu email',
+                }
             },
             {
                 path: 'forgot-password',
                 name: 'forgot-password',
                 component: () => import('pages/user/ForgotPassword.vue'),
+                meta: {
+                  label: 'esqueci minha senha',
+                }
             },
             {
                 path: 'reset-password',
                 name: 'reset-password',
                 component: () => import('pages/user/ResetPassword.vue'),
+                meta: {
+                  label: 'redefina minha senha',
+                }
             },
         ],
     },
