@@ -63,6 +63,13 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-xs-12 col-md-7">
+                        <span>cor da conta</span>
+                        <q-input borderless v-model="form.color" type="color" />
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-12 col-md-7">
                         <q-toggle v-model="form.credit_card" label="Possui crédito?" />
                     </div>
@@ -117,6 +124,7 @@ export default defineComponent({
             alias: '',
             bank: '',
             type: 'Conta Corrente',
+            color: '',
             balance: 0,
             credit_card: false,
             credit_limit: 0,
@@ -143,7 +151,7 @@ export default defineComponent({
             form.value.alias = '';
             form.value.bank = '';
             form.value.type = 'Conta Corrente';
-            form.value.balance = 0;
+            (form.value.color = ''), (form.value.balance = 0);
             form.value.credit_card = false;
             form.value.credit_limit = '';
             form.value.credit_used = '';

@@ -1,11 +1,11 @@
 <template>
-    <q-card padding class="card-account q-px-md">
+    <q-card padding class="card-account q-px-md nph-out" :style="`border: 2px solid ${color}`">
         <q-card-section
             horizontal
             class="justify-between items-center q-px-md q-mt-md"
             style="height: 2.5em"
         >
-            <h6>{{ alias }}</h6>
+            <h6 :style="`color: ${color}`">{{ alias }}</h6>
             <h6 class="opacity-50 text-subtitle2">Débito</h6>
         </q-card-section>
 
@@ -13,7 +13,7 @@
             <q-card-section>
                 <h4 class="text-h4">
                     <label class="text-subtitle2">Saldo atual</label><br />
-                    {{ balance }}
+                    <span :style="`color: ${color}`">{{ balance }}</span>
                 </h4>
 
                 <p class="text-positive">next recive date</p>
@@ -42,7 +42,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { _id, alias, bank, type, balance } = props.account;
+        const { _id, alias, bank, type, balance, color } = props.account;
         const totals = ref({});
 
         onMounted(() => {
@@ -66,6 +66,7 @@ export default defineComponent({
             type,
             balance,
             totals,
+            color,
         };
     },
 });
@@ -75,7 +76,6 @@ export default defineComponent({
 .card-account {
     height: 35vh;
     border-radius: 2em;
-    border: 2px solid $accent;
     background: $color_cold;
 }
 </style>

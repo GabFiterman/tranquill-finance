@@ -24,6 +24,11 @@ body {
     background: $image_bg_login center/cover no-repeat;
 }
 
+.main-background {
+    background: $color_bg_main;
+    position: relative;
+}
+
 .color-text {
     background: $color_text;
     -webkit-background-clip: text;

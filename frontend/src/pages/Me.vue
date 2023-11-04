@@ -5,7 +5,7 @@
                 <q-carousel
                     animated
                     v-model="slide"
-                    class="col-12 col-md-4"
+                    class="col-12 col-md-4 transparent"
                     arrows
                     navigation
                     infinite
