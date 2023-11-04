@@ -43,11 +43,7 @@
                 />
 
                 <div class="full-width q-pt-sm q-gutter-y-sm">
-                    <q-btn
-                        label="cadastre-se"
-                        class="full-width button nph-out"
-                        type="submit"
-                    />
+                    <q-btn label="cadastre-se" class="full-width button nph-out" type="submit" />
 
                     <q-btn
                         label="já tenho uma conta"
