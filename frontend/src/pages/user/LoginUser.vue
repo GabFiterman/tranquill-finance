@@ -34,13 +34,13 @@
                 </div>
                 <div class="full-width q-gutter-y-sm">
                     <q-btn
-                        label="register"
+                        label="não tenho uma conta"
                         class="full-width button-invisible"
                         flat
                         :to="{ name: 'register-user' }"
                     />
                     <q-btn
-                        label="Forgot Password ?"
+                        label="esqueci minha senha"
                         class="full-width button-invisible"
                         flat
                         :to="{ name: 'forgot-password' }"
