@@ -7,6 +7,7 @@ const accountSchema = new Schema({
     alias: { type: String, required: true },
     bank: { type: String, required: true },
     type: { type: String, required: true },
+    color: { type: String, required: true },
     balance: { type: Number, required: false },
     credit_card: { type: Boolean, required: false },
     credit_limit: { type: Number, required: false },
