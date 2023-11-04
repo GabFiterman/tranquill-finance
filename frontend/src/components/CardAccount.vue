@@ -1,14 +1,17 @@
 <template>
-    <q-card padding>
-        <q-card-section horizontal class="justify-between q-px-md">
-            <h5>{{ alias }}</h5>
-
-            <h6>Débito</h6>
+    <q-card padding class="card-account q-px-md">
+        <q-card-section
+            horizontal
+            class="justify-between items-center q-px-md q-mt-md"
+            style="height: 2.5em"
+        >
+            <h6>{{ alias }}</h6>
+            <h6 class="opacity-50 text-subtitle2">Débito</h6>
         </q-card-section>
 
-        <q-card-section horizontal class="justify-between">
+        <q-card-section horizontal class="justify-between items-start" style="margin-top: -2.5em">
             <q-card-section>
-                <h4 class="text-h4" style="margin-top: 0.75em">
+                <h4 class="text-h4">
                     <label class="text-subtitle2">Saldo atual</label><br />
                     {{ balance }}
                 </h4>
@@ -67,3 +70,12 @@ export default defineComponent({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.card-account {
+    height: 35vh;
+    border-radius: 2em;
+    border: 2px solid $accent;
+    background: $color_cold;
+}
+</style>

@@ -1,41 +1,53 @@
 <template>
     <q-page padding>
-        <q-form class="row justify-center" @submit.prevent="handleRegister">
-            <p class="col-12 text-h5 text-center">Register</p>
+        <q-form
+            class="row justify-center items-center"
+            style="height: 60vh"
+            @submit.prevent="handleRegister"
+        >
             <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
                 <q-input
-                    label="Email"
+                    placeholder="email"
                     v-model="form.email"
+                    borderless
+                    class="nph-in input"
                     lazy-rules
-                    :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+                    :rules="[
+                        (val) => (val && val.length > 0) || 'email é obrigatório',
+                        (val) => /.+@.+\..+/.test(val) || 'email não é válido',
+                    ]"
                     type="email"
                 />
 
                 <q-input
-                    label="Password"
+                    placeholder="senha"
                     v-model="form.password"
+                    borderless
+                    class="nph-in input"
                     lazy-rules
                     :rules="[
                         (val) =>
-                            (val && val.length >= 6) || 'Password is required and 6 characters',
+                            (val && val.length >= 6) || 'senha deve ter no mínimo 6 caracteres',
                     ]"
                 />
 
-                <div class="full-width q-pt-md q-gutter-y-sm">
-                    <q-btn
-                        label="Register"
-                        color="primary"
-                        class="full-width"
-                        outline
-                        rounded
-                        type="submit"
-                    />
+                <q-input
+                    placeholder="confirmar senha"
+                    v-model="form.confirmPassword"
+                    borderless
+                    class="nph-in input"
+                    lazy-rules
+                    :rules="[
+                        (val) => (val && val === form.password) || 'senhas precisam ser iguais',
+                    ]"
+                />
+
+                <div class="full-width q-pt-sm q-gutter-y-sm">
+                    <q-btn label="cadastre-se" class="full-width button nph-out" type="submit" />
 
                     <q-btn
-                        label="Back"
-                        color="dark"
-                        class="full-width"
-                        rounded
+                        label="já tenho uma conta"
+                        class="full-width button-invisible"
                         flat
                         :to="{ name: 'login-user' }"
                     />
@@ -62,6 +74,7 @@ export default defineComponent({
         const form = ref({
             email: '',
             password: '',
+            confirmPassword: '',
         });
 
         const handleRegister = async () => {

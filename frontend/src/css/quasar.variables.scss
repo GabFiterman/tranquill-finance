@@ -23,3 +23,18 @@ $positive: #21ba45;
 $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
+
+$color_bg_main: linear-gradient(135deg, #dfe1e7, #f7f9ff);
+$image_bg_login: url('/bg_Fractals.png');
+
+$color_cold: linear-gradient(135deg, #dfe1e7, #f7f9ff);
+
+$opacity-variable: 0.5;
+@for $i from 0 through 100 {
+    .opacity-#{$i} {
+        opacity: $i / 100;
+    }
+}
+
+$color_text: linear-gradient(180deg, #7d7979 0%, #5a5353 100%);
+$color_text_solid: #5a5353;
