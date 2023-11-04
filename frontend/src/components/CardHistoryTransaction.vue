@@ -1,20 +1,31 @@
 <template>
-    <q-card padding>
-        <q-card-section horizontal class="justify-between q-px-md">
+    <q-card padding class="card-history nph-out">
+        <q-card-section
+            horizontal
+            v-if="transactionAccount"
+            class="justify-between q-px-md"
+            :style="`border: 2px solid ${transactionAccount.color}`"
+        >
             <q-card-section class="flex column justify-between">
-                <!-- TODO: formatar data -->
-                <p class="text-bold">{{ formatedDate }}</p>
-                <p>{{ description }}</p>
-                <p v-if="transactionAccount">{{ transactionAccount?.alias }}</p>
+                <p class="text-bold color-text">{{ formatedDate }}</p>
+                <p class="color-text">{{ description }}</p>
+                <p>
+                    <span class="text-subtitle1">{{ transactionCategory?.name }}</span>
+                    <br />
+                    <span class="text-caption" :style="`color: ${transactionAccount.color}`">{{
+                        transactionAccount?.alias
+                    }}</span>
+                </p>
             </q-card-section>
             <q-card-section>
-                <span class="text-caption">{{ payment_method }}</span>
+                <p class="text-caption text-right">{{ payment_method }}</p>
                 <h3
                     :class="
-                        transactionCategory?.type === 'receita' ? 'text-positive' : 'text-negative'
+                        transactionCategory?.type === 'receita' ? 'color-stonks' : 'color-stinks'
                     "
                     class="text-bold"
                 >
+                    {{ transactionCategory?.type === 'receita' ? '+' : '-' }}
                     {{ value }}
                 </h3>
             </q-card-section>
@@ -81,3 +92,10 @@ export default defineComponent({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.card-history {
+    border-radius: 2em;
+    background: $color_cold;
+}
+</style>
