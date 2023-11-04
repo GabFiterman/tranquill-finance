@@ -1,36 +1,26 @@
 <template>
     <q-layout view="lHh Lpr lFf" class="main-background">
-        <q-header elevated>
-            <q-toolbar>
-                <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-
-                <q-toolbar-title> Tranquill Finance </q-toolbar-title>
-
-                <q-btn-dropdown flat color="white" icon="person">
-                    <q-list>
-                        <q-item clickable v-close-popup @click="handleLogout">
-                            <q-item-section>
-                                <q-item-label>Logout</q-item-label>
-                            </q-item-section>
-                        </q-item>
-                    </q-list>
-                </q-btn-dropdown>
-            </q-toolbar>
-        </q-header>
-
         <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
             <q-list>
-                <q-item-label header> Menu </q-item-label>
+                <q-item-label header> menu </q-item-label>
 
                 <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+
+                <div class="row" style="position: absolute; bottom: 2.5vh">
+                    <q-item clickable v-close-popup @click="handleLogout">
+                        <q-item-section>
+                            <q-item-label>logout</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </div>
             </q-list>
         </q-drawer>
 
         <q-page-container>
-            <q-button class="nph-out control-button">
+            <q-button class="nph-out control-button" @click="toggleLeftDrawer">
                 <img
                     src="Icon_up.svg"
-                    alt="Tranquill Finance"
+                    alt="menu"
                     width="35"
                     height="35"
                     style="margin-bottom: -0.75em"
@@ -46,32 +36,32 @@ import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
     {
-        title: 'Home',
+        title: 'home',
         caption: '',
         icon: 'mdi-home',
         routeName: 'me',
     },
     {
-        title: 'Contas',
+        title: 'contas',
         caption: '',
         icon: 'mdi-wallet',
         routeName: 'createAccount',
     },
     {
-        title: 'Categorias',
+        title: 'categorias',
         caption: '',
         icon: 'mdi-star-settings',
         routeName: 'createCategory',
     },
     {
-        title: 'Transações',
-        caption: 'Criar',
+        title: 'transações',
+        caption: 'criar',
         icon: 'mdi-cash-multiple',
         routeName: 'createTransaction',
     },
     {
-        title: 'Transações',
-        caption: 'Histórico',
+        title: 'transações',
+        caption: 'histórico',
         icon: 'mdi-history',
         routeName: 'historyTransaction',
     },
@@ -101,8 +91,8 @@ export default defineComponent({
 
         const handleLogout = async () => {
             $q.dialog({
-                title: 'Logout',
-                message: 'Deseja realmente sair ?',
+                title: 'logout',
+                message: 'deseja realmente sair ?',
                 cancel: true,
                 persistent: true,
             }).onOk(async () => {
