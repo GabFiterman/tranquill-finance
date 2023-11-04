@@ -1,5 +1,5 @@
 <template>
-    <q-card padding class="card-account q-px-md">
+    <q-card padding class="card-account q-px-md nph-out" :style="`border: 2px solid ${color}`">
         <q-card-section
             horizontal
             class="justify-between items-center q-px-md q-mt-md"
@@ -42,7 +42,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const { _id, alias, bank, type, balance } = props.account;
+        const { _id, alias, bank, type, balance, color } = props.account;
         const totals = ref({});
 
         onMounted(() => {
@@ -66,6 +66,7 @@ export default defineComponent({
             type,
             balance,
             totals,
+            color
         };
     },
 });
@@ -75,7 +76,6 @@ export default defineComponent({
 .card-account {
     height: 35vh;
     border-radius: 2em;
-    border: 2px solid $accent;
     background: $color_cold;
 }
 </style>
