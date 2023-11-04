@@ -151,8 +151,7 @@ export default defineComponent({
             form.value.alias = '';
             form.value.bank = '';
             form.value.type = 'Conta Corrente';
-            form.value.color = '',
-            form.value.balance = 0;
+            (form.value.color = ''), (form.value.balance = 0);
             form.value.credit_card = false;
             form.value.credit_limit = '';
             form.value.credit_used = '';

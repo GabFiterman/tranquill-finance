@@ -27,6 +27,15 @@
         </q-drawer>
 
         <q-page-container>
+            <q-button class="nph-out control-button">
+                <img
+                    src="Icon_up.svg"
+                    alt="Tranquill Finance"
+                    width="35"
+                    height="35"
+                    style="margin-bottom: -0.75em"
+                />
+            </q-button>
             <router-view />
         </q-page-container>
     </q-layout>
@@ -113,3 +122,15 @@ export default defineComponent({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.control-button {
+    border-radius: 33%;
+    min-height: 15vh;
+    position: sticky;
+    top: 80vh;
+    left: 75vw;
+    padding: 1.5em 1em;
+    z-index: 9999;
+}
+</style>

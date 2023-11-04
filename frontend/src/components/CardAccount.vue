@@ -5,7 +5,7 @@
             class="justify-between items-center q-px-md q-mt-md"
             style="height: 2.5em"
         >
-            <h6>{{ alias }}</h6>
+            <h6 :style="`color: ${color}`">{{ alias }}</h6>
             <h6 class="opacity-50 text-subtitle2">Débito</h6>
         </q-card-section>
 
@@ -13,7 +13,7 @@
             <q-card-section>
                 <h4 class="text-h4">
                     <label class="text-subtitle2">Saldo atual</label><br />
-                    {{ balance }}
+                    <span :style="`color: ${color}`">{{ balance }}</span>
                 </h4>
 
                 <p class="text-positive">next recive date</p>
@@ -66,7 +66,7 @@ export default defineComponent({
             type,
             balance,
             totals,
-            color
+            color,
         };
     },
 });
