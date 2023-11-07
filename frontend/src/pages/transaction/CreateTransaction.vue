@@ -1,15 +1,16 @@
 <template>
     <q-page padding>
-        <div class="row">
-            <h3>Criar uma transação</h3>
+        <div class="row q-px-lg">
+            <h5>criar uma transação</h5>
         </div>
         <div class="q-px-md">
-            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-sm">
+            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-md">
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <!-- TODO: atualmente só aceita inteiros, precisa começar a aceitar floats! -->
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             v-model="form.value"
                             type="number"
                             label="Valor da transação"
@@ -21,7 +22,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             v-model="form.description"
                             label="Descrição"
                             lazy-rules
@@ -31,34 +33,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-12 col-md-7">
-                        <q-radio
-                            fille
-                            v-model="form.type"
-                            type="radio"
-                            val="despesa"
-                            label="Despesa"
-                        />
-                        <q-radio
-                            fille
-                            v-model="form.type"
-                            type="radio"
-                            val="receita"
-                            label="Receita"
-                        />
+                    <div class="col-xs-6 col-md-7 text-center">
+                        <p class="text-subtitle2 color-stinks" style="margin-bottom: -.25em">despesa</p>
+                        <q-radio v-model="form.type" type="radio" val="despesa" />
+                    </div>
+                    <div class="col-xs-6 col-md-7 text-center">
+                        <p class="text-subtitle2 color-stonks" style="margin-bottom: -.25em">receita</p>
+                        <q-radio v-model="form.type" type="radio" val="receita" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-select
-                            filled
+                            borderless
+                            class="nph-out input"
                             v-model="form.category"
                             :options="filteredCategories"
+                            :style="`border: 2px solid ${form.category.color};`"
                             lazy-rules
                             :rules="[
                                 (val) =>
-                                    (val !== null && val !== '') ||
+                                    val !== null ||
+                                    val !== '' ||
+                                    val !== 'selecione uma categoria' ||
                                     'Por favor, selecione uma categoria',
                             ]"
                         />
@@ -68,13 +66,16 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-select
-                            filled
+                            borderless
+                            class="nph-out input"
                             v-model="form.account"
                             :options="allAccounts"
+                            :style="`border: 2px solid ${form.account.color};`"
                             lazy-rules
                             :rules="[
                                 (val) =>
                                     (val !== null && val !== '') ||
+                                    val !== 'selecione uma conta' ||
                                     'Por favor, selecione uma conta',
                             ]"
                         />
@@ -83,8 +84,23 @@
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-btn label="Submit" type="submit" color="primary" />
-                        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                        <q-btn
+                            :label="`criar ${form.type}`"
+                            type="submit"
+                            class="button full-width"
+                            :style="`border: 3px solid ${buttonColor};`"
+                        />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-7">
+                        <q-btn
+                            label="zerar"
+                            type="reset"
+                            flat
+                            class="button-invisible full-width"
+                        />
                     </div>
                 </div>
             </q-form>
@@ -93,7 +109,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, computed } from 'vue';
+import { defineComponent, ref, onMounted, computed, watch } from 'vue';
 import { api } from 'boot/axios';
 import useNotify from 'src/composables/UseNotify';
 import { userStore } from 'src/stores/userStore';
@@ -103,14 +119,14 @@ export default defineComponent({
     setup() {
         const form = ref({
             user_id: '',
-            value: 0,
+            value: null,
             description: '',
             type: 'despesa',
             //TODO: incialmente sempre hoje
             date_completed: new Date().toISOString(),
             date_expected: new Date().toISOString(),
-            category: '',
-            account: '',
+            category: 'selecione uma categoria',
+            account: 'selecione uma conta',
             //TODO: preciso validar se a conta possui crédito primeiro
             payment_method: 'debito',
         });
@@ -119,6 +135,16 @@ export default defineComponent({
         const allAccounts = ref([]);
         // NOTE: computed runs before onMounted hook
         const USER = computed(() => userStore());
+        const buttonColor = computed(() => {
+            return form.value.type === 'despesa' ? '#e7b7b7' : '#bfd8c4';
+        });
+
+        watch(
+            () => form.value.type,
+            () => {
+                form.value.category = 'selecione uma categoria';
+            },
+        );
 
         const { notifyError, notifySuccess } = useNotify();
 
@@ -136,6 +162,7 @@ export default defineComponent({
                             label: category.name,
                             value: category._id,
                             type: category.type,
+                            color: category.color,
                         };
                     });
                     if (allCategories.value.length < 1) {
@@ -168,6 +195,7 @@ export default defineComponent({
                             bank: account.bank,
                             credit_card: account.credit_card,
                             balance: account.balance,
+                            color: account.color,
                         };
                     });
                     if (allAccounts.value.length < 1) {
@@ -202,11 +230,11 @@ export default defineComponent({
         };
 
         const handleOnReset = () => {
-            form.value.value = 0;
+            form.value.value = null;
             form.value.description = '';
             form.value.type = 'despesa';
-            form.value.category = '';
-            form.value.account = '';
+            form.value.category = 'selecione uma categoria';
+            form.value.account = 'selecione uma conta';
             form.value.payment_method = 'debito';
         };
 
@@ -215,6 +243,7 @@ export default defineComponent({
             filteredCategories,
             allCategories,
             allAccounts,
+            buttonColor,
 
             handleOnSubmit,
             handleOnReset,
@@ -222,3 +251,17 @@ export default defineComponent({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.radioStinks {
+
+}
+
+.radioStonks {
+  border-radius: 50%;
+  background-color: red;
+}
+.radioStonks:checked  {
+  background-color: blue;
+}
+</style>
