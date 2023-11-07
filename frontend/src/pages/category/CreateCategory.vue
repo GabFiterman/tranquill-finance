@@ -1,14 +1,15 @@
 <template>
     <q-page padding>
-        <div class="row">
-            <h3>Criar uma categoria</h3>
+        <div class="row q-px-lg">
+            <h5>criar uma categoria</h5>
         </div>
         <div class="q-px-md">
-            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-sm">
+            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-md">
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             v-model="form.name"
                             label="Nome da Categoria"
                             lazy-rules
@@ -19,12 +20,12 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-select
-                            filled
+                            borderless
+                            class="nph-out input"
                             behavior="menu"
                             v-model="form.type"
                             :options="types_options"
                             lazy-rules
-                            class="text-capitalize"
                             :rules="[
                                 (val) =>
                                     (val !== null && val !== '') ||
@@ -33,17 +34,44 @@
                         />
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
-                        <span>Cor da Categoria</span>
-                        <q-input borderless v-model="form.color" type="color" />
+                        <q-input
+                            borderless
+                            class="nph-in input"
+                            v-model="form.color"
+                            :style="`border: 2px solid ${form.color};`"
+                        >
+                            <template v-slot:append>
+                                <q-icon name="colorize" class="cursor-pointer">
+                                    <q-popup-proxy
+                                        cover
+                                        transition-show="scale"
+                                        transition-hide="scale"
+                                    >
+                                        <q-color v-model="form.color" />
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </template>
+                        </q-input>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-btn label="Submit" type="submit" color="primary" />
-                        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                        <q-btn label="criar categoria" type="submit" class="button full-width" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-7">
+                        <q-btn
+                            label="zerar"
+                            type="reset"
+                            flat
+                            class="button-invisible full-width"
+                        />
                     </div>
                 </div>
             </q-form>
