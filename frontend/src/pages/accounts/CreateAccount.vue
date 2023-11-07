@@ -131,7 +131,7 @@
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-btn label="zerar" type="reset" class="button-invisible full-width" />
+                        <q-btn label="zerar" type="reset" flat class="button-invisible full-width" />
                     </div>
                 </div>
             </q-form>
