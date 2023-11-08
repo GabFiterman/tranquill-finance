@@ -131,7 +131,12 @@
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-btn label="zerar" type="reset" flat class="button-invisible full-width" />
+                        <q-btn
+                            label="zerar"
+                            type="reset"
+                            flat
+                            class="button-invisible full-width"
+                        />
                     </div>
                 </div>
             </q-form>
@@ -148,12 +153,12 @@ import { userStore } from 'src/stores/userStore';
 export default defineComponent({
     name: 'CreateAccount',
     setup() {
-        const types_options = ['Conta Corrente', 'Conta Poupança'];
+        const types_options = ['conta corrente', 'conta poupança'];
         const form = ref({
             user_id: '',
             alias: '',
             bank: '',
-            type: 'Conta Corrente',
+            type: 'conta corrente',
             color: '#333333',
             balance: null,
             credit_card: false,
@@ -180,7 +185,7 @@ export default defineComponent({
         const handleOnReset = () => {
             form.value.alias = '';
             form.value.bank = '';
-            form.value.type = 'Conta Corrente';
+            form.value.type = 'conta corrente';
             (form.value.color = ''), (form.value.balance = null);
             form.value.credit_card = false;
             form.value.credit_limit = null;

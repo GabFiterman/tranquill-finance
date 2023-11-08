@@ -34,11 +34,15 @@
 
                 <div class="row">
                     <div class="col-xs-6 col-md-7 text-center">
-                        <p class="text-subtitle2 color-stinks" style="margin-bottom: -.25em">despesa</p>
+                        <p class="text-subtitle2 color-stinks" style="margin-bottom: -0.25em">
+                            despesa
+                        </p>
                         <q-radio v-model="form.type" type="radio" val="despesa" />
                     </div>
                     <div class="col-xs-6 col-md-7 text-center">
-                        <p class="text-subtitle2 color-stonks" style="margin-bottom: -.25em">receita</p>
+                        <p class="text-subtitle2 color-stonks" style="margin-bottom: -0.25em">
+                            receita
+                        </p>
                         <q-radio v-model="form.type" type="radio" val="receita" />
                     </div>
                 </div>
@@ -254,14 +258,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .radioStinks {
-
 }
 
 .radioStonks {
-  border-radius: 50%;
-  background-color: red;
+    border-radius: 50%;
+    background-color: red;
 }
-.radioStonks:checked  {
-  background-color: blue;
+.radioStonks:checked {
+    background-color: blue;
 }
 </style>
