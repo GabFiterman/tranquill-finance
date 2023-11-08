@@ -8,5 +8,5 @@
         "titleBar.activeBackground": "#c2c8c9",
         "titleBar.activeForeground": "#343a42",
     },
-    "window.zoomLevel": 1.15,
+    "window.zoomLevel": 0,
 }

@@ -1,14 +1,15 @@
 <template>
     <q-page padding>
-        <div class="row">
-            <h3>Criar uma conta</h3>
+        <div class="row q-px-lg">
+            <h5>criar uma conta</h5>
         </div>
         <div class="q-px-md">
-            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-sm">
+            <q-form @submit.prevent="handleOnSubmit" @reset="handleOnReset" class="q-gutter-md">
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             v-model="form.alias"
                             label="Apelido da Conta"
                             lazy-rules
@@ -19,7 +20,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             v-model="form.bank"
                             label="Nome do banco"
                             lazy-rules
@@ -32,7 +34,8 @@
                 <div class="row">
                     <div class="col-12 col-md-7">
                         <q-select
-                            filled
+                            borderless
+                            class="nph-out input"
                             behavior="menu"
                             v-model="form.type"
                             :options="types_options"
@@ -48,8 +51,10 @@
                 <div class="row">
                     <div class="col-12 col-md-7">
                         <q-input
-                            filled
+                            borderless
+                            class="nph-in input"
                             type="number"
+                            placeholder="0.00"
                             v-model="form.balance"
                             label="Saldo Inicial"
                             lazy-rules
@@ -64,8 +69,24 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-7">
-                        <span>cor da conta</span>
-                        <q-input borderless v-model="form.color" type="color" />
+                        <q-input
+                            borderless
+                            class="nph-in input"
+                            v-model="form.color"
+                            :style="`border: 2px solid ${form.color};`"
+                        >
+                            <template v-slot:append>
+                                <q-icon name="colorize" class="cursor-pointer">
+                                    <q-popup-proxy
+                                        cover
+                                        transition-show="scale"
+                                        transition-hide="scale"
+                                    >
+                                        <q-color v-model="form.color" />
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </template>
+                        </q-input>
                     </div>
                 </div>
 
@@ -79,7 +100,9 @@
                     <div class="row">
                         <div class="col-12 col-md-7">
                             <q-input
-                                filled
+                                borderless
+                                class="nph-in input"
+                                placeholder="0.00"
                                 type="number"
                                 v-model="form.credit_limit"
                                 label="Crédito total liberado"
@@ -89,7 +112,9 @@
                     <div class="row">
                         <div class="col-12 col-md-7">
                             <q-input
-                                filled
+                                borderless
+                                class="nph-in input"
+                                placeholder="0.00"
                                 type="number"
                                 v-model="form.credit_used"
                                 label="Crédito utilizado"
@@ -100,8 +125,18 @@
 
                 <div class="row">
                     <div class="col-12 col-md-7">
-                        <q-btn label="Submit" type="submit" color="primary" />
-                        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                        <q-btn label="criar conta" type="submit" class="button full-width" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-7">
+                        <q-btn
+                            label="zerar"
+                            type="reset"
+                            flat
+                            class="button-invisible full-width"
+                        />
                     </div>
                 </div>
             </q-form>
@@ -118,17 +153,17 @@ import { userStore } from 'src/stores/userStore';
 export default defineComponent({
     name: 'CreateAccount',
     setup() {
-        const types_options = ['Conta Corrente', 'Conta Poupança'];
+        const types_options = ['conta corrente', 'conta poupança'];
         const form = ref({
             user_id: '',
             alias: '',
             bank: '',
-            type: 'Conta Corrente',
-            color: '',
-            balance: 0,
+            type: 'conta corrente',
+            color: '#333333',
+            balance: null,
             credit_card: false,
-            credit_limit: 0,
-            credit_used: 0,
+            credit_limit: null,
+            credit_used: null,
         });
         const { notifyError, notifySuccess } = useNotify();
         const USER = userStore();
@@ -150,11 +185,11 @@ export default defineComponent({
         const handleOnReset = () => {
             form.value.alias = '';
             form.value.bank = '';
-            form.value.type = 'Conta Corrente';
-            (form.value.color = ''), (form.value.balance = 0);
+            form.value.type = 'conta corrente';
+            (form.value.color = ''), (form.value.balance = null);
             form.value.credit_card = false;
-            form.value.credit_limit = '';
-            form.value.credit_used = '';
+            form.value.credit_limit = null;
+            form.value.credit_used = null;
         };
 
         return {

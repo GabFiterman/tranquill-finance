@@ -1,7 +1,7 @@
 <template>
     <q-page padding>
-        <div class="row">
-            <h3>History transaction</h3>
+        <div class="row q-px-lg">
+            <h5>histórico de transações</h5>
         </div>
         <div v-if="allTransactions">
             <div

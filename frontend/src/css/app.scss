@@ -36,6 +36,20 @@ body {
     color: transparent;
 }
 
+.color-stonks {
+    background: $color_stonks;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.color-stinks {
+    background: $color_stinks;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 .nph-in {
     background: $color_cold;
     box-shadow: 5px 5px 13px 0px rgba(212, 213, 219, 0.9) inset,
